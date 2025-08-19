@@ -38,7 +38,12 @@ export function InviteTeamMember() {
       <CardContent>
         <form action={inviteAction} className='space-y-4'>
           <div>
-            <Label htmlFor='email'>Email</Label>
+            <label
+              htmlFor='email'
+              className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+            >
+              Email
+            </label>
             <Input
               id='email'
               name='email'
@@ -49,7 +54,9 @@ export function InviteTeamMember() {
             />
           </div>
           <div>
-            <Label>Role</Label>
+            <label className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
+              Role
+            </label>
             <RadioGroup
               defaultValue='member'
               name='role'
@@ -58,11 +65,21 @@ export function InviteTeamMember() {
             >
               <div className='flex items-center space-x-2'>
                 <RadioGroupItem value='member' id='member' />
-                <Label htmlFor='member'>Member</Label>
+                <label
+                  htmlFor='member'
+                  className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                >
+                  Member
+                </label>
               </div>
               <div className='flex items-center space-x-2'>
                 <RadioGroupItem value='owner' id='owner' />
-                <Label htmlFor='owner'>Owner</Label>
+                <label
+                  htmlFor='owner'
+                  className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                >
+                  Owner
+                </label>
               </div>
             </RadioGroup>
           </div>

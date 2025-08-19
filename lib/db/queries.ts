@@ -1,200 +1,129 @@
-import { desc, and, eq, isNull } from 'drizzle-orm';
-import { db } from './drizzle';
-import {
-  activityLogs,
-  teamMembers,
-  teams,
-  users,
-  teamSubscriptionStatusEnum,
-  type Team,
-} from './schema';
-import { cookies } from 'next/headers';
-import { verifyToken } from '@/lib/auth/session';
+// Mock database queries for template purposes
+// In a real implementation, these would be actual database queries
 
-export async function getUser() {
-  const sessionCookie = (await cookies()).get('session');
-  if (!sessionCookie || !sessionCookie.value) {
-    return null;
-  }
+import { User, TeamDataWithMembers, ActivityType } from './schema';
+import { getSession } from '@/lib/auth/session';
 
-  const sessionData = await verifyToken(sessionCookie.value);
-  if (
-    !sessionData ||
-    !sessionData.user ||
-    typeof sessionData.user.id !== 'number'
-  ) {
-    return null;
-  }
+export async function getUser(): Promise<User | null> {
+  // Mock getting current user from session
+  const session = await getSession();
+  if (!session?.user?.id) return null;
 
-  if (new Date(sessionData.expires) < new Date()) {
-    return null;
-  }
-
-  const user = await db
-    .select()
-    .from(users)
-    .where(and(eq(users.id, sessionData.user.id), isNull(users.deletedAt)))
-    .limit(1);
-
-  if (user.length === 0) {
-    return null;
-  }
-
-  return user[0];
+  return getUserById(session.user.id.toString());
 }
 
-export async function getUserActiveSubscriptionDetails(
-  userId: number,
-): Promise<{
-  hasActiveSubscription: boolean;
-  status: (typeof teamSubscriptionStatusEnum.enumValues)[number] | null;
-}> {
-  const teamMemberships = await db.query.teamMembers.findMany({
-    where: eq(teamMembers.userId, userId),
-    with: {
-      team: {
-        columns: {
-          subscriptionStatus: true,
-        },
-      },
-    },
-  });
-
-  if (!teamMemberships || teamMemberships.length === 0) {
-    return { hasActiveSubscription: false, status: null };
-  }
-
-  let foundTrialingStatus:
-    | (typeof teamSubscriptionStatusEnum.enumValues)[number]
-    | null = null;
-
-  for (const membership of teamMemberships) {
-    if (membership.team?.subscriptionStatus === 'active') {
-      return { hasActiveSubscription: true, status: 'active' };
-    }
-    if (membership.team?.subscriptionStatus === 'trialing') {
-      foundTrialingStatus = 'trialing';
-    }
-  }
-
-  if (foundTrialingStatus === 'trialing') {
-    return { hasActiveSubscription: true, status: 'trialing' };
-  }
-
-  // No active or trialing subscription found
-  // Return the status of the first team, or null if no teams had a status (should not happen with schema defaults)
+export async function getUserById(id: string): Promise<User | null> {
+  // Mock user data
   return {
-    hasActiveSubscription: false,
-    status:
-      (teamMemberships[0]?.team
-        ?.subscriptionStatus as (typeof teamSubscriptionStatusEnum.enumValues)[number]) ||
-      null,
+    id,
+    email: 'user@example.com',
+    name: 'Mock User',
+    image: null,
+    role: 'owner' as const,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 }
 
-export async function getTeamByStripeCustomerId(customerId: string) {
-  const result = await db
-    .select()
-    .from(teams)
-    .where(eq(teams.stripeCustomerId, customerId))
-    .limit(1);
+export async function getUserWithTeam(
+  id: string,
+): Promise<(User & { team: TeamDataWithMembers }) | null> {
+  const user = await getUserById(id);
+  if (!user) return null;
 
-  return result.length > 0 ? result[0] : null;
-}
-
-export async function updateTeamSubscription(
-  teamId: number,
-  subscriptionData: {
-    stripeSubscriptionId: string | null;
-    stripeProductId: string | null;
-    planName: string | null;
-    subscriptionStatus: Team['subscriptionStatus'];
-    credits?: number | null;
-    subscriptionCreatedAt?: Date | null;
-  },
-) {
-  await db
-    .update(teams)
-    .set({
-      ...subscriptionData,
+  return {
+    ...user,
+    team: {
+      id: 'team-1',
+      name: 'Mock Team',
+      slug: 'mock-team',
+      stripeCustomerId: 'cus_mock',
+      stripeSubscriptionId: 'sub_mock',
+      stripeProductId: 'prod_mock_basic',
+      credits: 1000,
+      subscriptionStatus: 'active',
+      planName: 'Basic Plan',
+      createdAt: new Date(),
       updatedAt: new Date(),
-    })
-    .where(eq(teams.id, teamId));
-}
-
-export async function getUserWithTeam(userId: number) {
-  const result = await db
-    .select({
-      user: users,
-      teamId: teamMembers.teamId,
-    })
-    .from(users)
-    .leftJoin(teamMembers, eq(users.id, teamMembers.userId))
-    .where(eq(users.id, userId))
-    .limit(1);
-
-  return result[0];
-}
-
-export async function getActivityLogs() {
-  const user = await getUser();
-  if (!user) {
-    throw new Error('User not authenticated');
-  }
-
-  return await db
-    .select({
-      id: activityLogs.id,
-      action: activityLogs.action,
-      timestamp: activityLogs.timestamp,
-      ipAddress: activityLogs.ipAddress,
-      userName: users.name,
-    })
-    .from(activityLogs)
-    .leftJoin(users, eq(activityLogs.userId, users.id))
-    .where(eq(activityLogs.userId, user.id))
-    .orderBy(desc(activityLogs.timestamp))
-    .limit(10);
-}
-
-export async function getTeamForUser(userId: number) {
-  const result = await db.query.users.findFirst({
-    where: eq(users.id, userId),
-    with: {
-      teamMembers: {
-        with: {
-          team: {
-            with: {
-              teamMembers: {
-                with: {
-                  user: {
-                    columns: {
-                      id: true,
-                      name: true,
-                      email: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
+      members: [
+        {
+          id: 'member-1',
+          teamId: 'team-1',
+          userId: id,
+          role: 'owner' as const,
+          createdAt: new Date(),
+          user,
         },
-      },
+      ],
     },
-  });
-
-  return result?.teamMembers[0]?.team || null;
+  };
 }
 
-export async function setTeamCreditsByStripeCustomerId(
-  stripeCustomerId: string,
-  newCredits: number,
-): Promise<void> {
-  await db
-    .update(teams)
-    .set({
-      credits: newCredits,
-      updatedAt: new Date(),
-    })
-    .where(eq(teams.stripeCustomerId, stripeCustomerId));
+export async function getTeamForUser(
+  userId: string,
+): Promise<TeamDataWithMembers | null> {
+  const user = await getUserById(userId);
+  if (!user) return null;
+
+  return {
+    id: 'team-1',
+    name: 'Mock Team',
+    slug: 'mock-team',
+    stripeCustomerId: 'cus_mock',
+    stripeSubscriptionId: 'sub_mock',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    members: [
+      {
+        id: 'member-1',
+        teamId: 'team-1',
+        userId,
+        role: 'owner' as const,
+        createdAt: new Date(),
+        user,
+      },
+    ],
+  };
+}
+
+export async function getUserActiveSubscriptionDetails(userId: string) {
+  // Mock subscription data
+  return {
+    subscription: {
+      id: 'sub_mock',
+      status: 'active' as const,
+      current_period_start: Math.floor(Date.now() / 1000),
+      current_period_end: Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60,
+      cancel_at_period_end: false,
+      created: Math.floor(Date.now() / 1000),
+    },
+    price: {
+      id: 'price_mock_monthly',
+      unit_amount: 999,
+      currency: 'usd',
+      recurring: { interval: 'month' as const, interval_count: 1 },
+      product: 'prod_mock_basic',
+    },
+    product: {
+      id: 'prod_mock_basic',
+      name: 'Basic Plan',
+      description: 'Basic features for small teams',
+      metadata: { tier: 'basic' },
+    },
+    hasActiveSubscription: true,
+    status: 'active' as const,
+  };
+}
+
+export async function getActivityLogs(teamId: string, limit = 10) {
+  // Mock activity logs
+  return Array.from({ length: Math.min(limit, 3) }, (_, i) => ({
+    id: `log-${i}`,
+    teamId,
+    userId: 'user-1',
+    action: ActivityType.SIGN_IN,
+    ipAddress: '127.0.0.1',
+    userAgent: 'Mock Browser',
+    createdAt: new Date(Date.now() - i * 86400000), // Days ago
+  }));
 }

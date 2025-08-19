@@ -14,14 +14,13 @@ const Template: StoryFn<typeof UserAvatarMenu> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   user: {
-    id: 1,
+    id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
-    passwordHash: 'hashedpassword',
-    role: 'user',
+    role: 'member',
+    image: null,
     createdAt: new Date(),
     updatedAt: new Date(),
-    deletedAt: null,
   },
   handleSignOut: () => alert('Signed out'),
 };

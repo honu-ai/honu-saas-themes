@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { POST } from '../route';
-import { handleSubscriptionChange } from '@/lib/payments/stripe';
+// import { handleSubscriptionChange } from '@/lib/payments/stripe';
 import { NextRequest } from 'next/server';
 
 // Mock the stripe module

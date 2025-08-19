@@ -1,21 +1,35 @@
+// Mock payment actions for template purposes
+// In a real implementation, these would handle actual Stripe operations
+
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createCheckoutSession, createCustomerPortalSession } from './stripe';
-import { withTeam } from '@/lib/auth/middleware';
+import { createCheckoutSession } from './stripe';
 
-export const checkoutAction = withTeam(async (formData, team) => {
+export async function checkoutAction(formData: FormData) {
   const priceId = formData.get('priceId') as string;
-  const trialPeriodDays = formData.get('trialPeriodDays') as string;
 
-  await createCheckoutSession({
-    team: team,
-    priceId,
-    trialPeriodDays: trialPeriodDays ? Number(trialPeriodDays) : undefined,
+  if (!priceId) {
+    throw new Error('Price ID is required');
+  }
+
+  // Mock checkout session creation
+  const session = await createCheckoutSession({
+    price_id: priceId,
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?success=true`,
+    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing?canceled=true`,
+    customer_email: 'user@example.com',
   });
-});
 
-export const customerPortalAction = withTeam(async (_, team) => {
-  const portalSession = await createCustomerPortalSession(team);
-  redirect(portalSession.url);
-});
+  if (!session.url) {
+    throw new Error('Failed to create checkout session');
+  }
+
+  redirect(session.url);
+}
+
+export async function customerPortalAction() {
+  // Mock customer portal session
+  const portalUrl = 'https://billing.stripe.com/mock-portal';
+  redirect(portalUrl);
+}

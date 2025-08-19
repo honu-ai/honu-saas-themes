@@ -1,14 +1,13 @@
-import { pgTable, json, timestamp, boolean, text } from 'drizzle-orm/pg-core';
-import { InferSelectModel } from 'drizzle-orm';
 import { z } from 'zod';
 
-export const theme = pgTable('theme', {
-  id: text('id').primaryKey(),
-  name: text('name').notNull(),
-  styles: json('styles').$type<ThemeStyles>().notNull(),
-  createdAt: timestamp('created_at').notNull(),
-  updatedAt: timestamp('updated_at').notNull(),
-});
+// Mock theme table for template purposes
+export const theme = {
+  id: 'theme-1',
+  name: 'Default Theme',
+  styles: {},
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
 
 export const themeStylePropsSchema = z.object({
   background: z.string(),
@@ -87,4 +86,10 @@ export type ThemePreset = {
   };
 };
 
-export type Theme = InferSelectModel<typeof theme>;
+export type Theme = {
+  id: string;
+  name: string;
+  styles: ThemeStyles;
+  createdAt: Date;
+  updatedAt: Date;
+};

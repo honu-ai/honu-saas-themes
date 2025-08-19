@@ -6,7 +6,7 @@
     "llmInstructions": "This is the metadata for the website.",
     "fontFamily": "Poppins",
     "product": false,
-    "theme": "vercel",
+    "theme": "supabase",
     "colors": {
       "primary": "#2A9D8F",
       "success": "#E9C46A",

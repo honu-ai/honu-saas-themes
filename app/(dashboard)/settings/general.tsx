@@ -10,8 +10,7 @@ import { useUser } from '@/lib/auth';
 import { updateAccount } from '@/app/(login)/actions';
 import { customerPortalAction } from '@/lib/payments/actions';
 import { TeamDataWithMembers } from '@/lib/db/schema';
-import { SerializedSubscription } from '@/lib/payments/stripe';
-import Stripe from 'stripe';
+import { SerializedSubscription, StripeProduct } from '@/lib/payments/stripe';
 import { cn } from '@/lib/utils';
 
 type ActionState = {
@@ -25,7 +24,7 @@ export default function GeneralPage({
   subscription,
 }: {
   teamData: TeamDataWithMembers;
-  products: Stripe.Product[];
+  products: StripeProduct[];
   subscription?: SerializedSubscription;
 }) {
   const { userPromise } = useUser();
@@ -71,7 +70,12 @@ export default function GeneralPage({
         <CardContent>
           <form className='space-y-4' onSubmit={handleSubmit}>
             <div>
-              <Label htmlFor='name'>Name</Label>
+              <label
+                htmlFor='name'
+                className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                Name
+              </label>
               <Input
                 id='name'
                 name='name'
@@ -81,7 +85,12 @@ export default function GeneralPage({
               />
             </div>
             <div>
-              <Label htmlFor='email'>Email</Label>
+              <label
+                htmlFor='email'
+                className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                Email
+              </label>
               <Input
                 id='email'
                 name='email'

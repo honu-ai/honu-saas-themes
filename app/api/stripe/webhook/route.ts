@@ -1,4 +1,37 @@
-import Stripe from 'stripe';
+// Mock Stripe types for template
+declare namespace Stripe {
+  interface Event {
+    type: string;
+    data: {
+      object: any;
+    };
+  }
+  interface Subscription {
+    id: string;
+    customer: string;
+    status: string;
+    cancel_at_period_end: boolean;
+    items: {
+      data: Array<{
+        price: {
+          id: string;
+          recurring?: {
+            interval: string;
+          };
+          unit_amount: number;
+        };
+      }>;
+    };
+    canceled_at?: number;
+  }
+  interface Invoice {
+    id: string;
+    customer: string;
+    subscription: string;
+    amount_paid: number;
+    currency: string;
+  }
+}
 import {
   handleSubscriptionChange,
   stripe,

@@ -1,13 +1,11 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import * as schema from './schema';
-import dotenv from 'dotenv';
+// Mock database connection for template purposes
+// In a real implementation, this would connect to your database
 
-dotenv.config();
-
-if (!process.env.POSTGRES_URL) {
-  throw new Error('POSTGRES_URL environment variable is not set');
-}
-
-export const client = postgres(process.env.POSTGRES_URL);
-export const db = drizzle(client, { schema });
+export const db = {
+  // Mock database instance
+  query: {},
+  select: () => ({ from: () => ({ where: () => Promise.resolve([]) }) }),
+  insert: () => ({ values: () => Promise.resolve({ insertId: 'mock' }) }),
+  update: () => ({ set: () => ({ where: () => Promise.resolve() }) }),
+  delete: () => ({ where: () => Promise.resolve() }),
+};

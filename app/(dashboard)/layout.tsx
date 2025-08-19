@@ -24,37 +24,7 @@ function Header() {
   return (
     <header>
       <div className='mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
-        <Navbar
-          links={[
-            { label: 'Features', path: '/#benefits' },
-            { label: 'How it works', path: '/#solution' },
-            { label: 'FAQ', path: '/#faq' },
-            ...(content?.metadata?.product
-              ? [{ label: 'Pricing', path: '/pricing' }]
-              : []),
-          ]}
-        >
-          {content.metadata.product ? (
-            user ? (
-              <UserAvatarMenu user={user} handleSignOut={handleSignOut} />
-            ) : (
-              <div className='flex items-center space-x-3'>
-                <Button
-                  asChild
-                  className='rounded-full border border-black bg-transparent px-5 py-2 text-sm font-medium text-black hover:bg-gray-100 dark:border-white dark:text-white dark:hover:bg-gray-800'
-                >
-                  <Link href='/sign-in'>Log In</Link>
-                </Button>
-                <Button
-                  asChild
-                  className='rounded-full bg-black px-5 py-2 text-sm font-medium text-white hover:bg-gray-800'
-                >
-                  <Link href='/sign-up'>Sign Up</Link>
-                </Button>
-              </div>
-            )
-          ) : null}
-        </Navbar>
+        <Navbar links={[]} />
       </div>
     </header>
   );

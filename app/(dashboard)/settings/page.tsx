@@ -4,8 +4,8 @@ import GeneralPage from './general';
 import {
   getStripeProducts,
   getSerializedSubscription,
+  StripeProduct,
 } from '@/lib/payments/stripe';
-import Stripe from 'stripe';
 
 export default async function SettingsPage() {
   const user = await getUser();
@@ -15,7 +15,7 @@ export default async function SettingsPage() {
   }
 
   const teamData = await getTeamForUser(user.id);
-  const products: Stripe.Product[] = await getStripeProducts();
+  const products: StripeProduct[] = await getStripeProducts();
 
   if (!teamData) {
     throw new Error('Team not found');
@@ -32,7 +32,7 @@ export default async function SettingsPage() {
     <GeneralPage
       teamData={teamData}
       products={products}
-      subscription={subscription}
+      subscription={subscription || undefined}
     />
   );
 }
