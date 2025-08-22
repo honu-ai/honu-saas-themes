@@ -52,7 +52,10 @@ export default async function TechnicalHomePage() {
           badge={content.benefits.badge}
           title={content.benefits.title}
           description={content.benefits.description}
-          cards={content.benefits.cards}
+          cards={content.benefits.cards.map((card) => ({
+            ...card,
+            icon: card.icon as keyof typeof icons,
+          }))}
           bottomSection={content.benefits.bottomSection}
         />
       </section>
