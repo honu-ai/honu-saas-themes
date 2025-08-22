@@ -61,10 +61,9 @@ export default async function FriendlyHomePage() {
 
       <section id='faq'>
         <FaqSection
-          badge={content.faq.badge}
           title={content.faq.title}
           subtitle={content.faq.subtitle}
-          items={content.faq.items}
+          faqs={content.faq.items}
         />
       </section>
 
