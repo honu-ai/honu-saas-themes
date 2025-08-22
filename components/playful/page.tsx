@@ -1,13 +1,13 @@
 'use client';
 
 import { icons } from 'lucide-react';
-import HeroSection from '@/components/playful/hero-section';
-import ProblemSection from '@/components/playful/problem-section';
-import SolutionSection from '@/components/playful/solution-section';
-import BenefitsSection from '@/components/playful/benefits-section';
-import FaqSection from '@/components/playful/faq-section';
-import CtaSection from '@/components/playful/cta-section';
-import Footer from '@/components/playful/footer';
+import HeroSection from '@/components/hero-section';
+import ProblemSection from '@/components/problem-section';
+import SolutionSection from '@/components/solution-section';
+import BenefitsSection from '@/components/benefits-section';
+import FaqSection from '@/components/faq-section';
+import CtaSection from '@/components/cta-section';
+import Footer from '@/components/footer';
 import content from '../../content.json';
 
 export default function PlayfulHomePage() {

@@ -1,11 +1,11 @@
 import { icons } from 'lucide-react';
-import HeroSection from '@/components/friendly/hero-section';
-import ProblemSection from '@/components/friendly/problem-section';
-import SolutionSection from '@/components/friendly/solution-section';
-import BenefitsSection from '@/components/friendly/benefits-section';
-import FaqSection from '@/components/friendly/faq-section';
-import CtaSection from '@/components/friendly/cta-section';
-import Footer from '@/components/friendly/footer';
+import HeroSection from '@/components/hero-section';
+import ProblemSection from '@/components/problem-section';
+import SolutionSection from '@/components/solution-section';
+import BenefitsSection from '@/components/benefits-section';
+import FaqSection from '@/components/faq-section';
+import CtaSection from '@/components/cta-section';
+import Footer from '@/components/footer';
 import content from '../../content.json';
 
 export default async function FriendlyHomePage() {
