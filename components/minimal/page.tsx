@@ -73,7 +73,6 @@ export default async function MinimalHomePage() {
           primaryHref={content.hero.href}
           product={content.metadata.product}
           secondaryCtaText={content.cta.secondaryButtonText}
-          secondaryHref={content.hero.href}
         />
       </section>
 
