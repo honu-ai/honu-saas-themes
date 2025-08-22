@@ -71,6 +71,9 @@ export default async function MinimalHomePage() {
           primaryButtonText={content.cta.primaryButtonText}
           secondaryButtonText={content.cta.secondaryButtonText}
           primaryHref={content.hero.href}
+          product={content.metadata.product}
+          secondaryCtaText={content.cta.secondaryButtonText}
+          secondaryHref={content.hero.href}
         />
       </section>
 
