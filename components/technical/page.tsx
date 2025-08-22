@@ -1,11 +1,11 @@
 import { icons } from 'lucide-react';
-import HeroSection from '@/components/technical/hero-section';
-import ProblemSection from '@/components/technical/problem-section';
-import SolutionSection from '@/components/technical/solution-section';
-import BenefitsSection from '@/components/technical/benefits-section';
-import FaqSection from '@/components/technical/faq-section';
-import CtaSection from '@/components/technical/cta-section';
-import Footer from '@/components/technical/footer';
+import HeroSection from '@/components/hero-section';
+import ProblemSection from '@/components/problem-section';
+import SolutionSection from '@/components/solution-section';
+import BenefitsSection from '@/components/benefits-section';
+import FaqSection from '@/components/faq-section';
+import CtaSection from '@/components/cta-section';
+import Footer from '@/components/footer';
 import content from '../../content.json';
 
 export default async function TechnicalHomePage() {

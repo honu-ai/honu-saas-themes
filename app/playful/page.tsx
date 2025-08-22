@@ -1,3 +1,87 @@
-import PlayfulHomePage from '@/components/playful/page';
+import { icons } from 'lucide-react';
+import HeroSection from '@/components/technical/hero-section';
+import ProblemSection from '@/components/technical/problem-section';
+import SolutionSection from '@/components/technical/solution-section';
+import BenefitsSection from '@/components/technical/benefits-section';
+import FaqSection from '@/components/technical/faq-section';
+import CtaSection from '@/components/technical/cta-section';
+import Footer from '@/components/technical/footer';
+import content from '../../content.json';
 
-export default PlayfulHomePage;
+export default async function TechnicalHomePage() {
+  return (
+    <>
+      <section id='hero'>
+        <HeroSection
+          ctaText={content.hero.ctaText}
+          heroText={content.hero.heroText}
+          heroDescriptionHeading={content.hero.heroDescriptionHeading}
+          heroDescription={content.hero.heroDescription}
+          product={content.metadata.product}
+          steps={content.solution.steps}
+        />
+      </section>
+
+      <section id='problem'>
+        <ProblemSection
+          title={content.problem.title}
+          subtitle={content.problem.subtitle}
+          result={content.problem.result}
+          resultSubtitle={content.problem.resultSubtitle}
+          cards={content.problem.cards.map((card) => ({
+            title: card.title,
+            description: card.description,
+            icon: card.icon as keyof typeof icons,
+          }))}
+        />
+      </section>
+
+      <section id='solution'>
+        <SolutionSection
+          badge={content.solution.badge}
+          title={content.solution.title}
+          subtitle={content.solution.subtitle}
+          cta={content.solution.cta}
+          steps={content.solution.steps}
+          product={content.metadata.product}
+        />
+      </section>
+
+      <section id='benefits'>
+        <BenefitsSection
+          badge={content.benefits.badge}
+          title={content.benefits.title}
+          description={content.benefits.description}
+          cards={content.benefits.cards}
+          bottomSection={content.benefits.bottomSection}
+        />
+      </section>
+
+      <section id='faq'>
+        <FaqSection
+          faqs={content.faq.items}
+          title={content.faq.title}
+          subtitle={content.faq.subtitle}
+          badge={content.faq.badge}
+        />
+      </section>
+
+      <section id='cta'>
+        <CtaSection
+          title={content.cta.title}
+          description={content.cta.description}
+          primaryButtonText={content.cta.primaryButtonText}
+          secondaryButtonText={content.cta.secondaryButtonText}
+          product={content.metadata.product}
+        />
+      </section>
+
+      <section>
+        <Footer
+          companyName={content.footer.companyName}
+          description={content.footer.description}
+        />
+      </section>
+    </>
+  );
+}

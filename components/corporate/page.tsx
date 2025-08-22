@@ -1,11 +1,11 @@
 import { icons } from 'lucide-react';
-import HeroSection from '@/components/corporate/hero-section';
-import ProblemSection from '@/components/corporate/problem-section';
-import SolutionSection from '@/components/corporate/solution-section';
-import BenefitsSection from '@/components/corporate/benefits-section';
-import FaqSection from '@/components/corporate/faq-section';
-import CtaSection from '@/components/corporate/cta-section';
-import Footer from '@/components/corporate/footer';
+import HeroSection from '@/components/hero-section';
+import ProblemSection from '@/components/problem-section';
+import SolutionSection from '@/components/solution-section';
+import BenefitsSection from '@/components/benefits-section';
+import FaqSection from '@/components/faq-section';
+import CtaSection from '@/components/cta-section';
+import Footer from '@/components/footer';
 import content from '../../content.json';
 
 export default async function CorporateHomePage() {
