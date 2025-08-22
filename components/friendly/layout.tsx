@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Roboto as robotoFont } from 'next/font/google';
+import { Montserrat as montserratFont } from 'next/font/google';
 import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 import Script from 'next/script';
@@ -25,8 +25,8 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
-const roboto = robotoFont({
-  weight: ['400'],
+const montserrat = montserratFont({
+  weight: ['400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
 });
@@ -41,7 +41,11 @@ export default async function RootLayout({
   const bootstrap = await getBootstrapData();
 
   return (
-    <html lang='en' className={`${roboto.className}`} suppressHydrationWarning>
+    <html
+      lang='en'
+      className={`${montserrat.className}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Fallback favicon */}
         <link rel='icon' href='/favicon.svg' type='image/svg+xml' />

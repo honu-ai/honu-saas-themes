@@ -42,7 +42,6 @@ const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
       <div className='container mx-auto flex h-17 items-center justify-between px-4'>
         {/* Logo */}
         <Logo />
-
         {/* Desktop Navigation */}
         <nav className='hidden items-center space-x-1 md:flex'>
           <ul className='flex space-x-1'>

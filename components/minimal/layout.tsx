@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Roboto as robotoFont } from 'next/font/google';
+import { Inter as interFont } from 'next/font/google';
 import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 import Script from 'next/script';
@@ -13,8 +13,7 @@ import { Toaster } from '@/components/ui/sonner';
 
 // Uncomment to enable Formbricks integration
 // import FormbricksProvider from '@/components/formbricks-provider';
-
-import content from '../content.json';
+import content from '../../content.json';
 
 export const metadata: Metadata = {
   title: content.metadata.title,
@@ -25,10 +24,9 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
-const roboto = robotoFont({
-  weight: ['400'],
+const inter = interFont({
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  display: 'swap',
 });
 
 export default async function RootLayout({
@@ -41,7 +39,11 @@ export default async function RootLayout({
   const bootstrap = await getBootstrapData();
 
   return (
-    <html lang='en' className={`${roboto.className}`} suppressHydrationWarning>
+    <html
+      lang='en'
+      className={`${inter.className} theme-minimal`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Fallback favicon */}
         <link rel='icon' href='/favicon.svg' type='image/svg+xml' />

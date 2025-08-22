@@ -1,5 +1,12 @@
 import { Button } from '@/components/ui/button';
-import { Database, Eye, Palette, Building2 } from 'lucide-react';
+import {
+  Database,
+  Eye,
+  Palette,
+  Building2,
+  SmilePlus,
+  Sparkles,
+} from 'lucide-react';
 import Link from 'next/link';
 
 export default async function HomePage() {
@@ -16,7 +23,7 @@ export default async function HomePage() {
               style offers the same powerful features with unique aesthetics.
             </p>
           </div>
-          <div className='mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+          <div className='mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5'>
             {/* Classic Template */}
             <div className='relative overflow-hidden rounded-3xl bg-gray-50 p-8 ring-1 shadow-lg ring-gray-200 dark:bg-gray-900 dark:ring-gray-800'>
               <div className='flex items-center gap-x-4'>
@@ -78,6 +85,37 @@ export default async function HomePage() {
               </div>
             </div>
 
+            {/* Friendly Template */}
+            <div className='relative overflow-hidden rounded-3xl bg-gray-50 p-8 ring-1 shadow-lg ring-gray-200 dark:bg-gray-900 dark:ring-gray-800'>
+              <div className='flex items-center gap-x-4'>
+                <div className='rounded-lg bg-orange-500 p-2'>
+                  <SmilePlus className='h-6 w-6 text-white' />
+                </div>
+                <h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
+                  Friendly Template
+                </h3>
+              </div>
+              <p className='mt-4 text-gray-600 dark:text-gray-400'>
+                Warm, approachable design with rounded elements, gentle
+                gradients, and welcoming interactions perfect for
+                consumer-facing applications.
+              </p>
+              <div className='mt-6 flex items-center gap-x-3'>
+                <Button
+                  asChild
+                  className='bg-orange-500 text-white hover:bg-orange-600'
+                >
+                  <Link href='/friendly'>
+                    <Eye className='mr-2 h-4 w-4' />
+                    View Template
+                  </Link>
+                </Button>
+              </div>
+              <div className='mt-4 text-sm text-gray-500 dark:text-gray-400'>
+                ✓ Warm Design ✓ User-Friendly ✓ Engaging Animations
+              </div>
+            </div>
+
             {/* Corporate Template */}
             <div className='relative overflow-hidden rounded-3xl bg-gray-50 p-8 ring-1 shadow-lg ring-gray-200 dark:bg-gray-900 dark:ring-gray-800'>
               <div className='flex items-center gap-x-4'>
@@ -106,6 +144,37 @@ export default async function HomePage() {
               </div>
               <div className='mt-4 text-sm text-gray-500 dark:text-gray-400'>
                 ✓ Professional Layout ✓ Business-Focused ✓ Structured Design
+              </div>
+            </div>
+
+            {/* Playful Template */}
+            <div className='relative overflow-hidden rounded-3xl bg-gray-50 p-8 ring-1 shadow-lg ring-gray-200 dark:bg-gray-900 dark:ring-gray-800'>
+              <div className='flex items-center gap-x-4'>
+                <div className='rounded-lg bg-gradient-to-r from-pink-500 to-purple-600 p-2'>
+                  <Sparkles className='h-6 w-6 text-white' />
+                </div>
+                <h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
+                  Playful Template
+                </h3>
+              </div>
+              <p className='mt-4 text-gray-600 dark:text-gray-400'>
+                Fun, vibrant design with colorful gradients, playful animations,
+                and engaging interactions perfect for creative and lifestyle
+                applications.
+              </p>
+              <div className='mt-6 flex items-center gap-x-3'>
+                <Button
+                  asChild
+                  className='bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-pink-600 hover:to-purple-700'
+                >
+                  <Link href='/playful'>
+                    <Eye className='mr-2 h-4 w-4' />
+                    View Template
+                  </Link>
+                </Button>
+              </div>
+              <div className='mt-4 text-sm text-gray-500 dark:text-gray-400'>
+                ✓ Vibrant Colors ✓ Fun Animations ✓ Creative Design
               </div>
             </div>
           </div>

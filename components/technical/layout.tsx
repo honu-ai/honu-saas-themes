@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Roboto as robotoFont } from 'next/font/google';
+import { JetBrains_Mono as jetBrainsMonoFont } from 'next/font/google';
 import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 import Script from 'next/script';
@@ -14,7 +14,7 @@ import { Toaster } from '@/components/ui/sonner';
 // Uncomment to enable Formbricks integration
 // import FormbricksProvider from '@/components/formbricks-provider';
 
-import content from '../content.json';
+import content from '../../content.json';
 
 export const metadata: Metadata = {
   title: content.metadata.title,
@@ -25,10 +25,9 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
-const roboto = robotoFont({
-  weight: ['400'],
+const jetBrainsMono = jetBrainsMonoFont({
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  display: 'swap',
 });
 
 export default async function RootLayout({
@@ -41,7 +40,11 @@ export default async function RootLayout({
   const bootstrap = await getBootstrapData();
 
   return (
-    <html lang='en' className={`${roboto.className}`} suppressHydrationWarning>
+    <html
+      lang='en'
+      className={`theme-technical ${jetBrainsMono.className}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Fallback favicon */}
         <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
@@ -61,7 +64,7 @@ export default async function RootLayout({
           `}
         </Script>
       </head>
-      <body>
+      <body className='bg-background text-foreground min-h-screen'>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -84,7 +87,46 @@ export default async function RootLayout({
             {/* <Suspense>
                 <FormbricksProvider />
               </Suspense> */}
-            {children}
+            <header className='bg-card/60 border-b backdrop-blur-md'>
+              <div className='container mx-auto flex items-center justify-between py-3'>
+                <a
+                  href='/'
+                  className='hover:text-primary font-mono text-sm transition-colors'
+                >
+                  {content.metadata.title.toLowerCase()}
+                </a>
+                <nav className='flex gap-4 font-mono text-xs'>
+                  <a
+                    href='/corporate'
+                    className='text-muted-foreground hover:text-foreground focus-ring rounded-sm px-1 transition-colors'
+                  >
+                    Corporate
+                  </a>
+                  <a
+                    href='/friendly'
+                    className='text-muted-foreground hover:text-foreground focus-ring rounded-sm px-1 transition-colors'
+                  >
+                    Friendly
+                  </a>
+                  <a href='/technical' className='text-primary font-semibold'>
+                    Technical
+                  </a>
+                  <a
+                    href='/playful'
+                    className='text-muted-foreground hover:text-foreground focus-ring rounded-sm px-1 transition-colors'
+                  >
+                    Playful
+                  </a>
+                  <a
+                    href='/modern'
+                    className='text-muted-foreground hover:text-foreground focus-ring rounded-sm px-1 transition-colors'
+                  >
+                    Modern
+                  </a>
+                </nav>
+              </div>
+            </header>
+            <main>{children}</main>
             <Toaster />
           </UserProvider>
           {/* </PostHogProvider> */}
