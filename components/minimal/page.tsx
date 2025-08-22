@@ -1,11 +1,12 @@
-import HeroSection from '@/components/minimal/hero-section';
-import ProblemSection from '@/components/minimal/problem-section';
-import SolutionSection from '@/components/minimal/solution-section';
-import BenefitsSection from '@/components/minimal/benefits-section';
-import FaqSection from '@/components/minimal/faq-section';
-import CtaSection from '@/components/minimal/cta-section';
-import Footer from '@/components/minimal/footer';
+import HeroSection from '@/components/hero-section';
+import ProblemSection from '@/components/problem-section';
+import SolutionSection from '@/components/solution-section';
+import BenefitsSection from '@/components/benefits-section';
+import FaqSection from '@/components/faq-section';
+import CtaSection from '@/components/cta-section';
+import Footer from '@/components/footer';
 import content from '../../content.json';
+import { icons } from 'lucide-react';
 
 export default async function MinimalHomePage() {
   return (
@@ -26,7 +27,12 @@ export default async function MinimalHomePage() {
           title={content.problem.title}
           subtitle={content.problem.subtitle}
           resultSubtitle={content.problem.resultSubtitle}
-          cards={content.problem.cards}
+          cards={content.problem.cards.map((card) => ({
+            title: card.title,
+            description: card.description,
+            icon: card.icon as keyof typeof icons,
+          }))}
+          result={content.problem.result}
         />
       </section>
 
@@ -65,8 +71,6 @@ export default async function MinimalHomePage() {
           primaryButtonText={content.cta.primaryButtonText}
           secondaryButtonText={content.cta.secondaryButtonText}
           primaryHref={content.hero.href}
-          product={content.metadata.product}
-          secondaryCtaText={content.cta.secondaryButtonText}
         />
       </section>
 

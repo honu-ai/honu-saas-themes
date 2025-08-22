@@ -6,8 +6,10 @@ import { icons } from 'lucide-react';
 export type ProblemSectionProps = {
   title: string;
   subtitle: string;
+  result: string;
   resultSubtitle: string;
   cards: Array<{
+    icon: keyof typeof icons;
     title: string;
     description: string;
   }>;
@@ -16,6 +18,7 @@ export type ProblemSectionProps = {
 const ProblemSection: React.FC<ProblemSectionProps> = ({
   title,
   subtitle,
+  result,
   resultSubtitle,
   cards,
 }) => {
@@ -40,7 +43,10 @@ const ProblemSection: React.FC<ProblemSectionProps> = ({
             );
           })}
         </div>
-        <p className='text-muted-foreground mt-8 text-sm'>{resultSubtitle}</p>
+        <div className='mt-12 text-center'>
+          <p className='text-primary/80 text-lg font-medium'>{result}</p>
+          <p className='text-muted-foreground text-md mt-2'>{resultSubtitle}</p>
+        </div>
       </div>
     </section>
   );
