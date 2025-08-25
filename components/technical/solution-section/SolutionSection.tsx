@@ -52,9 +52,7 @@ const SolutionSection: React.FC<SolutionSectionProps> = ({
           triggerText={cta}
           className='inline-flex items-center'
           product={product}
-        >
-          {cta}
-        </ContactDialog>
+        />
       </div>
     </section>
   );

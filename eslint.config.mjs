@@ -11,7 +11,22 @@ import * as mdx from 'eslint-plugin-mdx';
 /** @type {import('eslint').Linter.Config[]} */
 
 export default [
-  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'], ignores: ['node_modules'] },
+  {
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    ignores: [
+      'node_modules',
+      'components/minimal/page.tsx',
+      'components/minimal/layout.tsx',
+      'components/corporate/page.tsx',
+      'components/corporate/layout.tsx',
+      'components/friendly/page.tsx',
+      'components/friendly/layout.tsx',
+      'components/technical/page.tsx',
+      'components/technical/layout.tsx',
+      'components/playful/page.tsx',
+      'components/playful/layout.tsx',
+    ],
+  },
   { ignores: ['node_modules', '.next', '.vercel'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,

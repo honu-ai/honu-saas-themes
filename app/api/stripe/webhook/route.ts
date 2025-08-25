@@ -1,37 +1,3 @@
-// Mock Stripe types for template
-declare namespace Stripe {
-  interface Event {
-    type: string;
-    data: {
-      object: any;
-    };
-  }
-  interface Subscription {
-    id: string;
-    customer: string;
-    status: string;
-    cancel_at_period_end: boolean;
-    items: {
-      data: Array<{
-        price: {
-          id: string;
-          recurring?: {
-            interval: string;
-          };
-          unit_amount: number;
-        };
-      }>;
-    };
-    canceled_at?: number;
-  }
-  interface Invoice {
-    id: string;
-    customer: string;
-    subscription: string;
-    amount_paid: number;
-    currency: string;
-  }
-}
 import {
   handleSubscriptionChange,
   stripe,
@@ -43,6 +9,41 @@ import { NextRequest, NextResponse } from 'next/server';
 // Keep this for future reference on how to track events with PostHog
 // import PostHogClient from '@/lib/posthog';
 
+// Mock Stripe types for template
+export interface StripeEvent {
+  type: string;
+  data: {
+    object: any;
+  };
+}
+
+export interface StripeSubscription {
+  id: string;
+  customer: string;
+  status: string;
+  cancel_at_period_end: boolean;
+  items: {
+    data: Array<{
+      price: {
+        id: string;
+        recurring?: {
+          interval: string;
+        };
+        unit_amount: number;
+      };
+    }>;
+  };
+  canceled_at?: number;
+}
+
+export interface StripeInvoice {
+  id: string;
+  customer: string;
+  subscription: string;
+  amount_paid: number;
+  currency: string;
+}
+
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(request: NextRequest) {
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
   const signature = request.headers.get('stripe-signature') as string;
   // const posthog = PostHogClient();
 
-  let event: Stripe.Event;
+  let event: StripeEvent;
 
   try {
     event = stripe.webhooks.constructEvent(payload, signature, webhookSecret);
@@ -64,7 +65,7 @@ export async function POST(request: NextRequest) {
 
   switch (event.type) {
     case 'customer.subscription.updated': {
-      const subscription = event.data.object as Stripe.Subscription;
+      const subscription = event.data.object as StripeSubscription;
       await handleSubscriptionChange(subscription);
       console.log('CANCELED');
       // Track subscription updated event
@@ -84,7 +85,7 @@ export async function POST(request: NextRequest) {
       break;
     }
     case 'customer.subscription.deleted': {
-      const subscription = event.data.object as Stripe.Subscription;
+      const subscription = event.data.object as StripeSubscription;
       await handleSubscriptionChange(subscription);
       console.log('DELETED');
       // Track subscription canceled event
@@ -103,7 +104,7 @@ export async function POST(request: NextRequest) {
       break;
     }
     case 'invoice.paid': {
-      const invoice = event.data.object as Stripe.Invoice;
+      const invoice = event.data.object as StripeInvoice;
       const customerId = invoice.customer as string;
       const subscriptionId = invoice.subscription as string;
 

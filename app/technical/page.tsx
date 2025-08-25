@@ -1,34 +1,40 @@
 import { icons } from 'lucide-react';
 import HeroSection from '@/components/technical/hero-section';
-import ProblemSection from '@/components/problem-section';
-import SolutionSection from '@/components/solution-section';
-import BenefitsSection from '@/components/benefits-section';
-import FaqSection from '@/components/faq-section';
-import CtaSection from '@/components/cta-section';
-import Footer from '@/components/footer';
+import ProblemSection from '@/components/technical/problem-section';
+import SolutionSection from '@/components/technical/solution-section';
+import BenefitsSection from '@/components/technical/benefits-section';
+import FaqSection from '@/components/technical/faq-section';
+import CtaSection from '@/components/technical/cta-section';
+import Footer from '@/components/technical/footer';
+import { parsePageContent, type SearchParams } from '@/lib/page-content';
 import content from '../../content.json';
 
-export default async function TechnicalHomePage() {
+type PageProps = {
+  searchParams: SearchParams;
+};
+
+export default async function TechnicalHomePage({ searchParams }: PageProps) {
+  const pageData = parsePageContent(searchParams, content);
   return (
     <>
       <section id='hero'>
         <HeroSection
-          ctaText={content.hero.ctaText}
-          heroText={content.hero.heroText}
-          heroDescriptionHeading={content.hero.heroDescriptionHeading}
-          heroDescription={content.hero.heroDescription}
-          product={content.metadata.product}
-          steps={content.solution.steps}
+          ctaText={pageData.hero.ctaText}
+          heroText={pageData.hero.heroText}
+          heroDescriptionHeading={pageData.hero.heroDescriptionHeading}
+          heroDescription={pageData.hero.heroDescription}
+          product={pageData.metadata.product}
+          steps={pageData.solution.steps}
         />
       </section>
 
       <section id='problem'>
         <ProblemSection
-          title={content.problem.title}
-          subtitle={content.problem.subtitle}
-          result={content.problem.result}
-          resultSubtitle={content.problem.resultSubtitle}
-          cards={content.problem.cards.map((card) => ({
+          title={pageData.problem.title}
+          subtitle={pageData.problem.subtitle}
+          result={pageData.problem.result}
+          resultSubtitle={pageData.problem.resultSubtitle}
+          cards={pageData.problem.cards.map((card) => ({
             title: card.title,
             description: card.description,
             icon: card.icon as keyof typeof icons,
@@ -38,48 +44,51 @@ export default async function TechnicalHomePage() {
 
       <section id='solution'>
         <SolutionSection
-          badge={content.solution.badge}
-          title={content.solution.title}
-          subtitle={content.solution.subtitle}
-          cta={content.solution.cta}
-          steps={content.solution.steps}
-          product={content.metadata.product}
+          badge={pageData.solution.badge}
+          title={pageData.solution.title}
+          subtitle={pageData.solution.subtitle}
+          cta={pageData.solution.cta}
+          steps={pageData.solution.steps}
+          product={pageData.metadata.product}
         />
       </section>
 
       <section id='benefits'>
         <BenefitsSection
-          badge={content.benefits.badge}
-          title={content.benefits.title}
-          description={content.benefits.description}
-          cards={content.benefits.cards}
-          bottomSection={content.benefits.bottomSection}
+          badge={pageData.benefits.badge}
+          title={pageData.benefits.title}
+          description={pageData.benefits.description}
+          cards={pageData.benefits.cards.map((card) => ({
+            ...card,
+            icon: card.icon as keyof typeof icons,
+          }))}
+          bottomSection={pageData.benefits.bottomSection}
         />
       </section>
 
       <section id='faq'>
         <FaqSection
-          faqs={content.faq.items}
-          title={content.faq.title}
-          subtitle={content.faq.subtitle}
-          badge={content.faq.badge}
+          badge={pageData.faq.badge}
+          faqs={pageData.faq.items}
+          title={pageData.faq.title}
+          subtitle={pageData.faq.subtitle}
         />
       </section>
 
       <section id='cta'>
         <CtaSection
-          title={content.cta.title}
-          description={content.cta.description}
-          primaryButtonText={content.cta.primaryButtonText}
-          secondaryButtonText={content.cta.secondaryButtonText}
-          product={content.metadata.product}
+          title={pageData.cta.title}
+          description={pageData.cta.description}
+          primaryButtonText={pageData.cta.primaryButtonText}
+          secondaryButtonText={pageData.cta.secondaryButtonText}
+          product={pageData.metadata.product}
         />
       </section>
 
       <section>
         <Footer
-          companyName={content.footer.companyName}
-          description={content.footer.description}
+          companyName={pageData.footer.companyName}
+          description={pageData.footer.description}
         />
       </section>
     </>
