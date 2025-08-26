@@ -14,7 +14,7 @@ type PageProps = {
 };
 
 export default async function TechnicalHomePage({ searchParams }: PageProps) {
-  const pageData = parsePageContent(searchParams, content);
+  const pageData = await parsePageContent(searchParams, content);
   return (
     <>
       <section id='hero'>

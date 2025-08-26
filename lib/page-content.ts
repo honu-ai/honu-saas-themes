@@ -3,25 +3,27 @@
  * while preserving privacy policy and terms of service from local content
  */
 
-export type SearchParams = {
+export type SearchParams = Promise<{
   pageContent?: string;
-};
+}>;
 
-export function parsePageContent<T extends Record<string, any>>(
+export async function parsePageContent<T extends Record<string, any>>(
   searchParams: SearchParams,
   defaultContent: T,
-): T {
+): Promise<T> {
+  // Await the search params since they're now async in Next.js
+  const params = await searchParams;
   // Start with default content
   let pageData = defaultContent;
 
-  if (searchParams.pageContent) {
+  if (params.pageContent) {
     try {
       // First try to decode the URI component, with fallback if it's already decoded
       let decodedContent: string;
       try {
-        decodedContent = decodeURIComponent(searchParams.pageContent);
+        decodedContent = decodeURIComponent(params.pageContent);
       } catch (uriError) {
-        decodedContent = searchParams.pageContent;
+        decodedContent = params.pageContent;
       }
 
       // Parse the JSON content
