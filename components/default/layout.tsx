@@ -26,9 +26,9 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
-const comfortaa = poppinsFont({
+const poppins = poppinsFont({
   weight: ['400', '500', '600', '700'],
-  subsets: ['Poppins'],
+  subsets: ['latin'],
   display: 'swap',
 });
 
@@ -42,11 +42,7 @@ export default async function RootLayout({
   const bootstrap = await getBootstrapData();
 
   return (
-    <html
-      lang='en'
-      className={`theme-playful ${comfortaa.className}`}
-      suppressHydrationWarning
-    >
+    <html lang='en' className={`${poppins.className}`} suppressHydrationWarning>
       <head>
         {/* Fallback favicon */}
         <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
