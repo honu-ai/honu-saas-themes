@@ -14,7 +14,7 @@ import { Toaster } from '@/components/ui/sonner';
 // Uncomment to enable Formbricks integration
 // import FormbricksProvider from '@/components/formbricks-provider';
 
-import content from '../../content.json';
+import content from '../content.json';
 
 export const metadata: Metadata = {
   title: content.metadata.title,
