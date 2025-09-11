@@ -20,7 +20,6 @@ export default function PlayfulHomePage() {
           heroDescription={content.hero.heroDescription}
           ctaText={content.hero.ctaText}
           product={content.metadata.product}
-          steps={content.solution.steps}
         />
       </section>
 
@@ -64,10 +63,9 @@ export default function PlayfulHomePage() {
 
       <section id='faq'>
         <FaqSection
-          badge={content.faq.badge}
+          faqs={content.faq.items}
           title={content.faq.title}
           subtitle={content.faq.subtitle}
-          items={content.faq.items}
         />
       </section>
 
