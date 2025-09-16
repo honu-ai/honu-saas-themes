@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CreditCard, Database, icons } from 'lucide-react';
-import { Terminal } from './terminal';
 import HeroSection from '@/components/hero-section';
 import FeatureCard from '@/components/feature-card';
 import content from '../../content.json';

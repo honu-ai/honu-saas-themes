@@ -87,45 +87,6 @@ export default async function RootLayout({
             {/* <Suspense>
                 <FormbricksProvider />
               </Suspense> */}
-            <header className='bg-card/60 border-b backdrop-blur-md'>
-              <div className='container mx-auto flex items-center justify-between py-3'>
-                <a
-                  href='/'
-                  className='hover:text-primary font-mono text-sm transition-colors'
-                >
-                  {content.metadata.title.toLowerCase()}
-                </a>
-                <nav className='flex gap-4 font-mono text-xs'>
-                  <a
-                    href='/corporate'
-                    className='text-muted-foreground hover:text-foreground focus-ring rounded-sm px-1 transition-colors'
-                  >
-                    Corporate
-                  </a>
-                  <a
-                    href='/friendly'
-                    className='text-muted-foreground hover:text-foreground focus-ring rounded-sm px-1 transition-colors'
-                  >
-                    Friendly
-                  </a>
-                  <a href='/technical' className='text-primary font-semibold'>
-                    Technical
-                  </a>
-                  <a
-                    href='/playful'
-                    className='text-muted-foreground hover:text-foreground focus-ring rounded-sm px-1 transition-colors'
-                  >
-                    Playful
-                  </a>
-                  <a
-                    href='/modern'
-                    className='text-muted-foreground hover:text-foreground focus-ring rounded-sm px-1 transition-colors'
-                  >
-                    Modern
-                  </a>
-                </nav>
-              </div>
-            </header>
             <main>{children}</main>
             <Toaster />
           </UserProvider>
