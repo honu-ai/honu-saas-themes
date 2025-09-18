@@ -4,6 +4,13 @@ import { ContactDialog } from '@/components/contact-form';
 import { SmilePlus } from 'lucide-react';
 import Link from 'next/link';
 
+// Add interface to extend Window interface with dataLayer
+declare global {
+  interface Window {
+    dataLayer?: any[];
+  }
+}
+
 export type HeroSectionProps = {
   href?: string;
   ctaText: string;
