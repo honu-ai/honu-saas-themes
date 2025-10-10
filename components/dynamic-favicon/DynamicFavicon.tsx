@@ -16,8 +16,6 @@ const DynamicFavicon: React.FC<DynamicFaviconProps> = ({ fontFamily }) => {
         return;
       }
 
-      const firstLetter = brandName.charAt(0);
-
       // Create an SVG element
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('width', '32');
@@ -60,7 +58,6 @@ const DynamicFavicon: React.FC<DynamicFaviconProps> = ({ fontFamily }) => {
       text.setAttribute('font-weight', 'bold');
       text.setAttribute('font-family', fontToUse);
       text.setAttribute('fill', primaryForeground);
-      text.textContent = firstLetter;
       svg.appendChild(text);
 
       // Convert SVG to a data URL

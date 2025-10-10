@@ -11,9 +11,10 @@ import Logo from '@/components/logo';
 export type NavbarProps = {
   links: { label: string; path: string }[];
   children?: React.ReactNode;
+  brandName?: string;
 };
 
-const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
+const Navbar: React.FC<NavbarProps> = ({ links, children, brandName }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -41,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
     >
       <div className='container mx-auto flex h-17 items-center justify-between px-4'>
         {/* Logo */}
-        <Logo />
+        <Logo brandName={brandName} />
         {/* Desktop Navigation */}
         <nav className='hidden items-center space-x-1 md:flex'>
           <ul className='flex space-x-1'>

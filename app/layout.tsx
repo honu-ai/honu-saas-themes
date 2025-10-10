@@ -17,8 +17,9 @@ import { Toaster } from '@/components/ui/sonner';
 import content from '../content.json';
 
 export const metadata: Metadata = {
-  title: content.metadata.title,
-  description: content.metadata.description,
+  title: 'Honu - SAAS Landing Page Template',
+  description:
+    'Honu SAAS Landing Page Template for Next.js, Tailwind CSS, and Shadcn UI',
 };
 
 export const viewport: Viewport = {
