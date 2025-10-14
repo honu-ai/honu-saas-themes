@@ -10,6 +10,7 @@ import ThemeProvider from '@/components/theme-provider';
 import DynamicFavicon from '@/components/dynamic-favicon';
 import { getBootstrapData } from '@/lib/posthog';
 import { Toaster } from '@/components/ui/sonner';
+import { parsePageContent, type SearchParams } from '@/lib/page-content';
 
 // Uncomment to enable Formbricks integration
 // import FormbricksProvider from '@/components/formbricks-provider';
@@ -17,9 +18,8 @@ import { Toaster } from '@/components/ui/sonner';
 import content from '../content.json';
 
 export const metadata: Metadata = {
-  title: 'Honu - SAAS Landing Page Template',
-  description:
-    'Honu SAAS Landing Page Template for Next.js, Tailwind CSS, and Shadcn UI',
+  title: content.metadata.title,
+  description: content.metadata.description,
 };
 
 export const viewport: Viewport = {
@@ -34,12 +34,15 @@ const roboto = robotoFont({
 
 export default async function RootLayout({
   children,
+  searchParams,
 }: {
   children: React.ReactNode;
+  searchParams: SearchParams;
 }) {
   const userPromise = getUser();
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID; // Access the GTM ID from the environment
   const bootstrap = await getBootstrapData();
+  const pageData = await parsePageContent(searchParams, content);
 
   return (
     <html lang='en' className={`${roboto.className}`} suppressHydrationWarning>
