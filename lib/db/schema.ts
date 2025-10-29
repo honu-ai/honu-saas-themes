@@ -1,48 +1,66 @@
-// Mock database schema for template purposes
-// In a real implementation, this would define your database schema
+import {
+  pgTable,
+  serial,
+  varchar,
+  text,
+  timestamp,
+  integer,
+  pgEnum,
+} from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
 
-export interface User {
-  id: string;
-  email: string;
-  name: string | null;
-  image: string | null;
-  role?: 'owner' | 'admin' | 'member';
-  createdAt: Date;
-  updatedAt: Date;
-}
+export const teamSubscriptionStatusEnum = pgEnum('team_subscription_status', [
+  'active',
+  'canceled',
+  'incomplete',
+  'incomplete_expired',
+  'past_due',
+  'paused',
+  'trialing',
+  'unpaid',
+]);
 
-export interface NewUser {
-  id?: string;
-  email: string;
-  name?: string | null;
-  image?: string | null;
-}
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 100 }),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  passwordHash: text('password_hash').notNull(),
+  role: varchar('role', { length: 20 }).notNull().default('member'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at'),
+  // Subscription fields
+  stripeCustomerId: text('stripe_customer_id').unique(),
+  stripeSubscriptionId: text('stripe_subscription_id').unique(),
+  stripeProductId: text('stripe_product_id'),
+  planName: varchar('plan_name', { length: 50 }),
+  subscriptionStatus: varchar('subscription_status', { length: 20 }),
+  credits: integer('credits'),
+});
 
-export interface TeamMember {
-  id: string;
-  teamId: string;
-  userId: string;
-  role: 'owner' | 'admin' | 'member';
-  createdAt: Date;
-}
+export const activityLogs = pgTable('activity_logs', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id),
+  action: text('action').notNull(),
+  timestamp: timestamp('timestamp').notNull().defaultNow(),
+  ipAddress: varchar('ip_address', { length: 45 }),
+});
 
-export interface Team {
-  id: string;
-  name: string;
-  slug: string;
-  stripeCustomerId?: string | null;
-  stripeSubscriptionId?: string | null;
-  stripeProductId?: string | null;
-  credits?: number;
-  subscriptionStatus?: string | null;
-  planName?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+export const usersRelations = relations(users, ({ many }) => ({
+  activityLogs: many(activityLogs),
+}));
 
-export interface TeamDataWithMembers extends Team {
-  members: (TeamMember & { user: User })[];
-}
+export const activityLogsRelations = relations(activityLogs, ({ one }) => ({
+  user: one(users, {
+    fields: [activityLogs.userId],
+    references: [users.id],
+  }),
+}));
+
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+export type ActivityLog = typeof activityLogs.$inferSelect;
+export type NewActivityLog = typeof activityLogs.$inferInsert;
 
 export enum ActivityType {
   SIGN_UP = 'SIGN_UP',
@@ -51,15 +69,4 @@ export enum ActivityType {
   UPDATE_PASSWORD = 'UPDATE_PASSWORD',
   DELETE_ACCOUNT = 'DELETE_ACCOUNT',
   UPDATE_ACCOUNT = 'UPDATE_ACCOUNT',
-  CREATE_TEAM = 'CREATE_TEAM',
-  REMOVE_TEAM_MEMBER = 'REMOVE_TEAM_MEMBER',
-  INVITE_TEAM_MEMBER = 'INVITE_TEAM_MEMBER',
-  ACCEPT_INVITATION = 'ACCEPT_INVITATION',
 }
-
-// Mock table definitions
-export const users = {};
-export const teams = {};
-export const teamMembers = {};
-export const invitations = {};
-export const activityLogs = {};

@@ -16,7 +16,7 @@ export async function parsePageContent<T extends Record<string, any>>(
   // Start with default content
   let pageData = defaultContent;
 
-  if (params.pageContent) {
+  if (params && params.pageContent) {
     try {
       // First try to decode the URI component, with fallback if it's already decoded
       let decodedContent: string;
