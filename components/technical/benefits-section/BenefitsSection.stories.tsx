@@ -1,110 +1,60 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 import BenefitsSection from './BenefitsSection';
+import content from '../../content.json';
 
 const meta: Meta<typeof BenefitsSection> = {
-  title: 'Technical/BenefitsSection',
+  title: 'Landing Page/Sections/BenefitsSection',
   component: BenefitsSection,
   parameters: {
     layout: 'fullscreen',
   },
-  tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof BenefitsSection>;
 
 export const Default: Story = {
   args: {
-    badge: 'BENEFITS',
-    title: 'Why Choose Our Platform',
-    description: 'Technical advantages that give you a competitive edge',
-    cards: [
-      {
-        title: 'Performance',
-        description: 'Optimized for speed and efficiency',
-        icon: 'Thermometer',
-        benefits: [
-          'Sub-second response times',
-          '99.9% uptime guarantee',
-          'Global CDN distribution',
-          'Automatic scaling',
-        ],
-      },
-      {
-        title: 'Developer Experience',
-        description: 'Built by developers, for developers',
-        icon: 'Sparkles',
-        benefits: [
-          'TypeScript first',
-          'Comprehensive documentation',
-          'CLI tools included',
-          'VS Code extensions',
-        ],
-      },
-      {
-        title: 'Lightweight',
-        description: 'Minimal footprint, maximum impact',
-        icon: 'Feather',
-        benefits: [
-          'Zero dependencies',
-          'Tree-shakeable modules',
-          'Gzip < 50kb',
-          'No runtime overhead',
-        ],
-      },
-    ],
-    bottomSection: {
-      title: 'Enterprise Ready',
-      description:
-        'Scales from prototype to production with enterprise-grade security and compliance features.',
-    },
+    badge: content.benefits.badge,
+    title: content.benefits.title,
+    description: content.benefits.description,
+    cards: content.benefits.cards,
+    bottomSection: content.benefits.bottomSection,
   },
 };
 
-export const Infrastructure: Story = {
+// A simple test for component rendering
+export const WithComponentTest: Story = {
   args: {
-    badge: 'INFRASTRUCTURE',
-    title: 'Technical Foundation',
-    description: 'Robust architecture designed for modern applications',
-    cards: [
-      {
-        title: 'Scalability',
-        description: 'Auto-scaling infrastructure',
-        icon: 'TrendingUp',
-        benefits: [
-          'Horizontal scaling',
-          'Load balancing',
-          'Auto-provisioning',
-          'Cost optimization',
-        ],
-      },
-      {
-        title: 'Security',
-        description: 'Enterprise-grade protection',
-        icon: 'Shield',
-        benefits: [
-          'End-to-end encryption',
-          'SOC 2 compliance',
-          'Regular audits',
-          'Zero-trust architecture',
-        ],
-      },
-      {
-        title: 'Monitoring',
-        description: 'Full observability stack',
-        icon: 'Monitor',
-        benefits: [
-          'Real-time metrics',
-          'Distributed tracing',
-          'Log aggregation',
-          'Alert management',
-        ],
-      },
-    ],
-    bottomSection: {
-      title: 'Cloud Native',
-      description:
-        'Built for the cloud from day one with Kubernetes orchestration and microservices architecture.',
-    },
+    badge: content.benefits.badge,
+    title: content.benefits.title,
+    description: content.benefits.description,
+    cards: content.benefits.cards,
+    bottomSection: content.benefits.bottomSection,
+  },
+  play: async ({ canvasElement }) => {
+    // Testing that the component renders without errors
+    const canvas = document.body.querySelector('#storybook-root');
+
+    // Check if title renders correctly
+    const title = canvas?.querySelector('h2');
+    if (title) {
+      // Verify title content - updated to match actual content
+      const hasText = title.textContent?.includes('Go Beyond Basic AI');
+      if (!hasText) {
+        throw new Error('Title does not contain expected text');
+      }
+    } else {
+      throw new Error('Title not found');
+    }
+
+    // Check if benefit cards render
+    const cards = canvas?.querySelectorAll('.hover\\:border-primary\\/50');
+    if (!cards || cards.length !== 3) {
+      throw new Error(
+        'Expected 3 benefit cards but found ' + (cards?.length || 0),
+      );
+    }
   },
 };

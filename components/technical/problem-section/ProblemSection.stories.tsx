@@ -1,8 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import ProblemSection from './ProblemSection';
+import { icons } from 'lucide-react';
+
+import content from '../../content.json';
 
 const meta: Meta<typeof ProblemSection> = {
-  title: 'Technical/ProblemSection',
+  title: 'Landing Page/Sections/ProblemSection',
   component: ProblemSection,
   parameters: {
     layout: 'fullscreen',
@@ -11,62 +14,47 @@ const meta: Meta<typeof ProblemSection> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ProblemSection>;
 
 export const Default: Story = {
   args: {
-    title: 'The Current Problem',
-    subtitle:
-      'Creating social media content from articles is time-consuming and inconsistent',
-    result: 'Low engagement, wasted time, missed opportunities',
-    resultSubtitle: 'Most content creators struggle with this',
-    cards: [
-      {
-        title: 'Time Consuming',
-        description:
-          'Hours spent manually reading, summarizing, and crafting posts for each platform',
-        icon: 'Hourglass',
-      },
-      {
-        title: 'Manual Process',
-        description:
-          'Copy-paste workflows that are prone to errors and inconsistencies',
-        icon: 'Hand',
-      },
-      {
-        title: 'Platform Differences',
-        description:
-          'Each social platform has different requirements and best practices',
-        icon: 'Shuffle',
-      },
-    ],
+    title: content.problem.title,
+    subtitle: content.problem.subtitle,
+    result: content.problem.result,
+    resultSubtitle: content.problem.resultSubtitle,
+    cards: content.problem.cards.map((card) => ({
+      ...card,
+      icon: card.icon as keyof typeof icons,
+    })),
   },
 };
 
-export const CustomIcons: Story = {
+export const CustomContent: Story = {
   args: {
-    title: 'Development Challenges',
-    subtitle: 'Building modern applications comes with complexity',
-    result: 'Slower delivery, technical debt, maintenance burden',
-    resultSubtitle: 'Every development team faces these issues',
+    title: 'The Market <span className="text-primary">Challenge</span>',
+    subtitle:
+      'Modern marketing requires new approaches and strategies to succeed in today&apos;s competitive landscape.',
+    result: 'What happens next?',
+    resultSubtitle:
+      'Companies that adapt will thrive, while others fall behind.',
     cards: [
       {
-        title: 'Configuration Overhead',
+        icon: 'Clock',
+        title: 'Increased Competition',
         description:
-          'Setting up tooling and environments takes valuable development time',
-        icon: 'Settings',
+          'More businesses are investing in digital marketing, making it harder to stand out.',
       },
       {
-        title: 'Code Quality',
+        icon: 'TrendingDown',
+        title: 'Changing Metrics',
         description:
-          'Maintaining consistent standards across teams and projects',
-        icon: 'Code',
+          'Success is measured differently now, with engagement and conversion trumping impressions.',
       },
       {
-        title: 'Scalability Issues',
+        icon: 'Frown',
+        title: 'ROI Pressure',
         description:
-          'Architecture decisions that seemed right initially become bottlenecks',
-        icon: 'TrendingUp',
+          'Marketing departments are under increasing pressure to demonstrate clear return on investment.',
       },
     ],
   },
