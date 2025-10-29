@@ -33,23 +33,5 @@ export const CustomContent: Story = {
     primaryButtonText: 'Get Started Now',
     secondaryButtonText: 'Talk to Sales',
     disclaimerText: 'Start free, no credit card needed',
-    companyLogos: [
-      {
-        src: 'https://via.placeholder.com/120x40/ffffff/333333?text=Logo+1',
-        alt: 'Customer Logo 1',
-      },
-      {
-        src: 'https://via.placeholder.com/120x40/ffffff/333333?text=Logo+2',
-        alt: 'Customer Logo 2',
-      },
-      {
-        src: 'https://via.placeholder.com/120x40/ffffff/333333?text=Logo+3',
-        alt: 'Customer Logo 3',
-      },
-      {
-        src: 'https://via.placeholder.com/120x40/ffffff/333333?text=Logo+4',
-        alt: 'Customer Logo 4',
-      },
-    ],
   },
 };

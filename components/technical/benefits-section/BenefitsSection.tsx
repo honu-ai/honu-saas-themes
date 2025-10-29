@@ -10,7 +10,7 @@ export type BenefitsSectionProps = {
   cards: Array<{
     title: string;
     description: string;
-    icon: keyof typeof icons;
+    icon: string;
     benefits: string[];
   }>;
   bottomSection: {
@@ -36,7 +36,7 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
         <p className='text-muted-foreground mt-1 max-w-2xl'>{description}</p>
         <div className='mt-8 grid gap-6 md:grid-cols-3'>
           {cards.map((card, i) => {
-            const Icon = icons[card.icon];
+            const Icon = icons[card.icon as keyof typeof icons];
             return (
               <div key={i} className='bg-card rounded-xl border p-6'>
                 <div className='bg-primary/10 text-primary mb-4 inline-flex h-9 w-9 items-center justify-center rounded'>
