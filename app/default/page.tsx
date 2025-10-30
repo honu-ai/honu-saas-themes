@@ -1,15 +1,14 @@
-import { Button } from '@/components/ui/button';
-import { ArrowRight, CreditCard, Database, icons } from 'lucide-react';
 import HeroSection from '@/components/hero-section';
-import FeatureCard from '@/components/feature-card';
 import content from '../../content.json';
-import ProblemSection from '@/components/problem-section';
-import SolutionSection from '@/components/solution-section';
-import BenefitsSection from '@/components/benefits-section';
-import FaqSection from '@/components/faq-section';
-import CtaSection from '@/components/cta-section';
-import Footer from '@/components/footer';
+import SolutionSection from '@/components/default/solution-section';
+import BenefitsSection from '@/components/default/benefits-section';
+import FaqSection from '@/components/default/faq-section';
+import CtaSection from '@/components/default/cta-section';
+import Footer from '@/components/default/footer';
+import ProblemSection from '@/components/default/problem-section';
 import { parsePageContent, type SearchParams } from '@/lib/page-content';
+
+import { icons } from 'lucide-react';
 
 type PageProps = {
   searchParams: SearchParams;

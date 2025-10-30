@@ -21,14 +21,16 @@ const ProblemSection: React.FC<ProblemSectionProps> = ({
   cards,
 }) => {
   return (
-    <section className='bg-slate-950 px-4 py-16 text-white'>
+    <section className='text-foreground px-4 py-16'>
       <div className='mx-auto max-w-7xl'>
         <div className='mb-12 text-center'>
           <h2
             className='mb-6 text-3xl font-bold md:text-4xl'
             dangerouslySetInnerHTML={{ __html: title }}
           />
-          <p className='mx-auto max-w-2xl text-lg'>{subtitle}</p>
+          <p className='text-muted-foreground mx-auto max-w-2xl text-lg'>
+            {subtitle}
+          </p>
         </div>
 
         <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
@@ -37,7 +39,7 @@ const ProblemSection: React.FC<ProblemSectionProps> = ({
             return (
               <div
                 key={index}
-                className='hover:border-primary/50 border-border/10 bg-muted-foreground/5 rounded-lg border p-6 backdrop-blur-sm transition duration-300'
+                className='border-border/10 bg-muted-foreground/5 rounded-lg border p-6 backdrop-blur-sm transition duration-300'
               >
                 <div className='bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-lg'>
                   <Icon className='text-primary h-6 w-6' />
@@ -48,11 +50,11 @@ const ProblemSection: React.FC<ProblemSectionProps> = ({
             );
           })}
         </div>
-
+        {/* 
         <div className='mt-12 text-center'>
           <p className='text-primary/80 mb-2 text-xl font-medium'>{result}</p>
           <h3 className='text-2xl font-bold md:text-3xl'>{resultSubtitle}</h3>
-        </div>
+        </div> */}
       </div>
     </section>
   );
