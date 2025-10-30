@@ -18,7 +18,6 @@ export const Default: Story = {
   args: {
     title: content.solution.title,
     subtitle: content.solution.subtitle,
-    ctaText: content.solution.ctaText,
     steps: content.solution.steps,
     product: content.metadata.product,
   },
