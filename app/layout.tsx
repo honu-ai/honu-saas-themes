@@ -20,8 +20,8 @@ import { parsePageContent, type SearchParams } from '@/lib/page-content';
 import content from '../content.json';
 
 export const metadata: Metadata = {
-  title: content.metadata.title,
-  description: content.metadata.description,
+  title: 'Honu SAAS Template',
+  description: 'Honu SAAS Template',
 };
 
 export const viewport: Viewport = {
