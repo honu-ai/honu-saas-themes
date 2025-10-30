@@ -1,28 +1,25 @@
-'use client';
-
-import { icons } from 'lucide-react';
 import HeroSection from '@/components/hero-section';
+import content from '../../content.json';
 import ProblemSection from '@/components/problem-section';
 import SolutionSection from '@/components/solution-section';
 import BenefitsSection from '@/components/benefits-section';
 import FaqSection from '@/components/faq-section';
 import CtaSection from '@/components/cta-section';
 import Footer from '@/components/footer';
-import content from '../../content.json';
+import { icons } from 'lucide-react';
 
-export default function PlayfulHomePage() {
+export default async function HomePage() {
   return (
-    <>
+    <main className='light'>
       <section id='hero'>
         <HeroSection
-          heroDescriptionHeading={content.hero.heroDescriptionHeading}
-          heroText={content.hero.heroText}
-          heroDescription={content.hero.heroDescription}
           ctaText={content.hero.ctaText}
+          heroText={content.hero.heroText}
+          heroDescriptionHeading={content.hero.heroDescriptionHeading}
+          heroDescription={content.hero.heroDescription}
           product={content.metadata.product}
         />
       </section>
-
       <section id='problem'>
         <ProblemSection
           title={content.problem.title}
@@ -36,7 +33,6 @@ export default function PlayfulHomePage() {
           }))}
         />
       </section>
-
       <section id='solution'>
         <SolutionSection
           badge={content.solution.badge}
@@ -47,20 +43,15 @@ export default function PlayfulHomePage() {
           product={content.metadata.product}
         />
       </section>
-
       <section id='benefits'>
         <BenefitsSection
           badge={content.benefits.badge}
           title={content.benefits.title}
           description={content.benefits.description}
-          cards={content.benefits.cards.map((card) => ({
-            ...card,
-            icon: card.icon as keyof typeof icons,
-          }))}
+          cards={content.benefits.cards}
           bottomSection={content.benefits.bottomSection}
         />
       </section>
-
       <section id='faq'>
         <FaqSection
           faqs={content.faq.items}
@@ -68,7 +59,6 @@ export default function PlayfulHomePage() {
           subtitle={content.faq.subtitle}
         />
       </section>
-
       <section id='cta'>
         <CtaSection
           title={content.cta.title}
@@ -85,6 +75,6 @@ export default function PlayfulHomePage() {
           description={content.footer.description}
         />
       </section>
-    </>
+    </main>
   );
 }

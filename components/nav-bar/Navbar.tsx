@@ -11,16 +11,16 @@ import Logo from '@/components/logo';
 export type NavbarProps = {
   links: { label: string; path: string }[];
   children?: React.ReactNode;
-  brandName?: string;
 };
 
-const Navbar: React.FC<NavbarProps> = ({ links, children, brandName }) => {
+const Navbar: React.FC<NavbarProps> = ({ links, children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
-  // const isDashboard = pathname?.startsWith('/dashboard') ?? false;
+  // Hide the main navbar on dashboard page
+  const isDashboard = pathname?.startsWith('/dashboard') ?? false;
 
   // Handle scroll event to change navbar appearance
   useEffect(() => {
@@ -32,17 +32,22 @@ const Navbar: React.FC<NavbarProps> = ({ links, children, brandName }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  if (isDashboard) {
+    return null;
+  }
+
   return (
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-background/80 shadow-sm backdrop-blur-md'
-          : 'bg-background'
+          : 'bg-transparent'
       }`}
     >
       <div className='container mx-auto flex h-17 items-center justify-between px-4'>
         {/* Logo */}
-        <Logo brandName={brandName} />
+        <Logo />
+
         {/* Desktop Navigation */}
         <nav className='hidden items-center space-x-1 md:flex'>
           <ul className='flex space-x-1'>
@@ -64,14 +69,10 @@ const Navbar: React.FC<NavbarProps> = ({ links, children, brandName }) => {
               </li>
             ))}
           </ul>
-          <div className='ml-4 flex items-center space-x-2'>
-            <ThemeToggle />
-            {children}
-          </div>
+          {children}
         </nav>
         <div className='flex items-center md:hidden'>
-          <ThemeToggle />
-          {children}
+          <div className='hidden md:block'>{children}</div>
           <Button
             variant='ghost'
             size='icon'
@@ -116,6 +117,7 @@ const Navbar: React.FC<NavbarProps> = ({ links, children, brandName }) => {
                 )}
               </li>
             ))}
+            {children}
           </ul>
         </nav>
       </div>

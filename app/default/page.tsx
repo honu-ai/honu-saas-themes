@@ -1,14 +1,13 @@
-import HeroSection from '@/components/hero-section';
-import content from '../../content.json';
+import HeroSection from '@/components/default/hero-section';
+import ProblemSection from '@/components/default/problem-section';
 import SolutionSection from '@/components/default/solution-section';
 import BenefitsSection from '@/components/default/benefits-section';
 import FaqSection from '@/components/default/faq-section';
 import CtaSection from '@/components/default/cta-section';
-import Footer from '@/components/default/footer';
-import ProblemSection from '@/components/default/problem-section';
-import { parsePageContent, type SearchParams } from '@/lib/page-content';
-
+import Footer from '@/components/footer';
+import content from '../../content.json';
 import { icons } from 'lucide-react';
+import { parsePageContent, type SearchParams } from '@/lib/page-content';
 
 type PageProps = {
   searchParams: SearchParams;

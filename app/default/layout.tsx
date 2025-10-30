@@ -1,62 +1,36 @@
-'use client';
+import type { Metadata, Viewport } from 'next';
+import { Poppins as poppinsFont } from 'next/font/google';
+import { UserProvider } from '@/lib/auth';
+import { getUser } from '@/lib/db/queries';
+import Script from 'next/script';
 
-import Link from 'next/link';
-import { use, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { useUser } from '@/lib/auth';
-import { signOut } from '@/app/(login)/actions';
-import { useRouter } from 'next/navigation';
+import DynamicFavicon from '@/components/dynamic-favicon';
+import { Toaster } from '@/components/ui/sonner';
 import Navbar from '@/components/nav-bar';
-import UserAvatarMenu from '@/components/user-avatar-menu';
-import content from '@/content.json';
-import { useSearchParams } from 'next/navigation';
+
+import content from '../../content.json';
+import '@/components/default/globals.css';
+
+export const metadata: Metadata = {
+  title: content.metadata.title,
+  description: content.metadata.description,
+};
+
+export const viewport: Viewport = {
+  maximumScale: 1,
+};
+
+const poppins = poppinsFont({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 function Header() {
-  const { userPromise } = useUser();
-  const user = use(userPromise);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pageContent = searchParams.get('pageContent');
-  let pageData = content;
-
-  if (pageContent) {
-    const params = { pageContent };
-    try {
-      // First try to decode the URI component, with fallback if it's already decoded
-      let decodedContent: string;
-      try {
-        decodedContent = decodeURIComponent(params.pageContent);
-      } catch (uriError) {
-        decodedContent = params.pageContent;
-      }
-
-      // Parse the JSON content
-      const customContent = JSON.parse(decodedContent);
-
-      // Use custom content but always preserve privacy policy and terms from local content
-      pageData = {
-        ...customContent,
-        privacy_policy: content.privacy_policy,
-        terms_of_service: content.terms_of_service,
-      } as typeof content;
-    } catch (error) {
-      console.error('Failed to parse pageContent parameter:', error);
-      // Fall back to default content if parsing fails
-      pageData = content;
-    }
-  }
-
-  async function handleSignOut() {
-    await signOut();
-    router.refresh();
-    router.push('/');
-  }
-
   return (
     <header>
       <div className='mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
         <Navbar
-          brandName={pageData.metadata.brandName}
           links={[
             { label: 'Features', path: '/#benefits' },
             { label: 'How it works', path: '/#solution' },
@@ -65,38 +39,57 @@ function Header() {
               ? [{ label: 'Pricing', path: '/pricing' }]
               : []),
           ]}
-        >
-          {content.metadata.product ? (
-            user ? (
-              <UserAvatarMenu user={user} handleSignOut={handleSignOut} />
-            ) : (
-              <div className='flex items-center space-x-3'>
-                <Button
-                  asChild
-                  className='rounded-full border border-black bg-transparent px-5 py-2 text-sm font-medium text-black hover:bg-gray-100 dark:border-white dark:text-white dark:hover:bg-gray-800'
-                >
-                  <Link href='/sign-in'>Log In</Link>
-                </Button>
-                <Button
-                  asChild
-                  className='rounded-full bg-black px-5 py-2 text-sm font-medium text-white hover:bg-gray-800'
-                >
-                  <Link href='/sign-up'>Sign Up</Link>
-                </Button>
-              </div>
-            )
-          ) : null}
-        </Navbar>
+        ></Navbar>
       </div>
     </header>
   );
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const userPromise = getUser();
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID; // Access the GTM ID from the environment
+
   return (
-    <section className='flex min-h-screen flex-col pt-17'>
-      <Header />
-      {children}
-    </section>
+    <html lang='en' className={`${poppins.className}`} suppressHydrationWarning>
+      <head>
+        {/* Fallback favicon */}
+        <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
+        <DynamicFavicon />
+        {/* Google tag (gtag.js) */}
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${gtmId}`}
+        ></Script>
+        <Script>
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${gtmId}');
+          `}
+        </Script>
+      </head>
+      <body>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height='0'
+            width='0'
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        <UserProvider userPromise={userPromise}>
+          <Header />
+          {children}
+          <Toaster />
+        </UserProvider>
+      </body>
+    </html>
   );
 }

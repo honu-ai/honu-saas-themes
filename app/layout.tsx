@@ -77,27 +77,16 @@ export default async function RootLayout({
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
-
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ThemeStyleProvider>
-            {/* <PostHogProvider bootstrap={bootstrap}> */}
-            <UserProvider userPromise={userPromise}>
-              {/* Uncomment to enable Formbricks integration */}
-              {/* <Suspense>
+        {/* <PostHogProvider bootstrap={bootstrap}> */}
+        <UserProvider userPromise={userPromise}>
+          {/* Uncomment to enable Formbricks integration */}
+          {/* <Suspense>
                   <FormbricksProvider />
                 </Suspense> */}
-              {children}
-              <Toaster />
-              <ThemeSelector />
-            </UserProvider>
-            {/* </PostHogProvider> */}
-          </ThemeStyleProvider>
-        </ThemeProvider>
+          {children}
+          <Toaster />
+        </UserProvider>
+        {/* </PostHogProvider> */}
       </body>
     </html>
   );
