@@ -1,65 +1,26 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import SolutionSection from './SolutionSection';
+import content from '../../content.json';
 
 const meta: Meta<typeof SolutionSection> = {
-  title: 'Friendly/SolutionSection',
+  title: 'Landing Page/Sections/SolutionSection',
   component: SolutionSection,
   parameters: {
     layout: 'fullscreen',
   },
-  tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof SolutionSection>;
 
 export const Default: Story = {
   args: {
-    badge: 'Our Solution',
-    title: 'Transform Your Content Creation Process',
-    subtitle:
-      'Our intelligent platform streamlines your content creation workflow, helping you produce high-quality content that resonates with your audience.',
-    cta: 'Get Started',
-    steps: [
-      {
-        number: 1,
-        title: 'Input Your Article',
-        description:
-          'Simply paste your blog article or URL into our intelligent platform.',
-      },
-      {
-        number: 2,
-        title: 'AI Analysis',
-        description:
-          'Our AI analyzes your content to identify key themes and engagement points.',
-      },
-      {
-        number: 3,
-        title: 'Generate Posts',
-        description:
-          'Receive perfectly formatted social media posts optimized for each platform.',
-      },
-      {
-        number: 4,
-        title: 'Publish & Engage',
-        description:
-          'Schedule or publish instantly and watch your engagement soar.',
-      },
-    ],
+    badge: content.solution.badge,
+    title: content.solution.title,
+    subtitle: content.solution.subtitle,
+    cta: content.solution.cta,
+    steps: content.solution.steps,
+    product: content.metadata.product,
   },
-  decorators: [
-    (Story) => (
-      <div className='theme-friendly bg-background text-foreground min-h-screen'>
-        <Story />
-      </div>
-    ),
-  ],
-};
-
-export const WithCallback: Story = {
-  args: {
-    ...Default.args,
-    onCtaClick: () => console.log('Solution CTA clicked'),
-  },
-  decorators: Default.decorators,
 };

@@ -1,8 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import CtaSection from './CtaSection';
+import React from 'react';
+import { Meta, StoryObj } from '@storybook/nextjs';
+import CtaSection, { CtaSectionProps } from './CtaSection';
+import content from '../../content.json';
 
 const meta: Meta<typeof CtaSection> = {
-  title: 'Playful/CtaSection',
+  title: 'Landing Page/Sections/CtaSection',
   component: CtaSection,
   parameters: {
     layout: 'fullscreen',
@@ -11,26 +13,25 @@ const meta: Meta<typeof CtaSection> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof CtaSection>;
 
 export const Default: Story = {
   args: {
-    title: 'Ready to transform your content creation?',
-    description:
-      'Join thousands of creators who have already streamlined their workflow with our AI-powered platform. Start creating magic today!',
-    primaryButtonText: 'Start Creating Magic ✨',
-    secondaryButtonText: 'Learn More',
-    secondaryHref: '#features',
-    product: true,
+    title: content.cta.title,
+    description: content.cta.description,
+    primaryButtonText: content.cta.primaryButtonText,
+    secondaryButtonText: content.cta.secondaryButtonText,
+    product: content.metadata.product,
   },
 };
 
-export const WithoutSecondaryButton: Story = {
+export const CustomContent: Story = {
   args: {
-    title: 'Transform your articles into viral social content',
+    title: 'Ready to Transform Your Business Today',
     description:
-      'Experience the power of AI-driven content creation and watch your engagement soar.',
-    primaryButtonText: 'Get Started Free 🚀',
-    product: true,
+      'Join thousands of businesses already growing with our platform. Start your journey now.',
+    primaryButtonText: 'Get Started Now',
+    secondaryButtonText: 'Talk to Sales',
+    disclaimerText: 'Start free, no credit card needed',
   },
 };

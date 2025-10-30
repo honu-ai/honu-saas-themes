@@ -1,27 +1,26 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import { Meta, StoryFn } from '@storybook/nextjs';
 import HeroSection from './HeroSection';
+import content from '../../content.json';
 
-const meta: Meta<typeof HeroSection> = {
-  title: 'Minimal/HeroSection',
+export default {
+  title: 'Landing Page/Sections/HeroSection',
   component: HeroSection,
   parameters: {
     layout: 'fullscreen',
   },
-  tags: ['autodocs'],
-};
+} as Meta;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+const Template: StoryFn<typeof HeroSection> = (args) => (
+  <HeroSection {...args} />
+);
 
-export const Default: Story = {
-  args: {
-    heroText:
-      'AI Blog Content That Ranks & Resonates, Powered by Real-Time Data.',
-    heroDescription:
-      'CurrentSage AI empowers digital marketing agencies and e-commerce businesses to create high-quality, SEO-optimised blog posts by integrating real-time trends, consumer behavior, and local events.',
-    ctaText: 'Generate Your First Post Free',
-    href: '#',
-    secondaryCtaText: 'Learn More',
-    secondaryHref: '#solution',
-  },
+export const Default = Template.bind({});
+Default.args = {
+  href: content.hero.href,
+  ctaText: content.hero.ctaText,
+  heroText: content.hero.heroText,
+  heroDescriptionHeading: content.hero.heroDescriptionHeading,
+  heroDescription: content.hero.heroDescription,
+  product: content.metadata.product,
 };

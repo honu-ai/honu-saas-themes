@@ -1,45 +1,37 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import FaqSection from './FaqSection';
+import React from 'react';
+import { Meta, StoryFn } from '@storybook/nextjs';
+import FaqSection, { FaqSectionProps } from './FaqSection';
+import content from '../../content.json';
 
-const meta: Meta<typeof FaqSection> = {
-  title: 'Playful/FaqSection',
+export default {
+  title: 'Landing Page/Sections/FaqSection',
   component: FaqSection,
   parameters: {
     layout: 'fullscreen',
   },
-  tags: ['autodocs'],
+} as Meta;
+
+const Template: StoryFn<FaqSectionProps> = (args) => <FaqSection {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+  title: content.faq.title,
+  subtitle: content.faq.subtitle,
+  faqs: content.faq.items,
 };
 
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
-    badge: '❓ FAQ',
-    title: 'Frequently Asked Questions',
-    subtitle:
-      'Everything you need to know about our magical content creation platform',
-    items: [
-      {
-        question: 'How does the AI article analysis work?',
-        answer:
-          'Our AI reads through your article, identifies key themes, extracts important quotes, and understands the main message to create engaging social media posts.',
-      },
-      {
-        question: 'Can I customize the generated posts?',
-        answer:
-          'Absolutely! All generated posts are fully editable. You can adjust the tone, add emojis, modify hashtags, and make any changes to match your brand voice.',
-      },
-      {
-        question: 'Which social media platforms are supported?',
-        answer:
-          'We support all major platforms including Twitter, LinkedIn, Facebook, Instagram, and TikTok. Each post is optimized for the specific platform requirements.',
-      },
-      {
-        question: 'Is there a limit to how many articles I can process?',
-        answer:
-          'It depends on your plan. Our starter plan includes 50 articles per month, while our pro plans offer unlimited processing.',
-      },
-    ],
-  },
+export const CustomFaqs = Template.bind({});
+CustomFaqs.args = {
+  faqs: [
+    {
+      question: 'What is a custom FAQ question?',
+      answer:
+        'This is a custom FAQ answer that demonstrates how to pass custom FAQs to the component.',
+    },
+    {
+      question: 'Can I add my own FAQs?',
+      answer:
+        'Yes, you can pass your own array of FAQ items to customize the content displayed in this section.',
+    },
+  ],
 };

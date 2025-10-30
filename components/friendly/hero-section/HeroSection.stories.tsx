@@ -1,42 +1,26 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import { Meta, StoryFn } from '@storybook/nextjs';
 import HeroSection from './HeroSection';
+import content from '../../content.json';
 
-const meta: Meta<typeof HeroSection> = {
-  title: 'Friendly/HeroSection',
+export default {
+  title: 'Landing Page/Sections/HeroSection',
   component: HeroSection,
   parameters: {
     layout: 'fullscreen',
   },
-  tags: ['autodocs'],
-};
+} as Meta;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+const Template: StoryFn<typeof HeroSection> = (args) => (
+  <HeroSection {...args} />
+);
 
-export const Default: Story = {
-  args: {
-    heroDescriptionHeading: 'Transform Your Content',
-    heroText: 'Turn Articles into Engaging Social Media Posts',
-    heroDescription:
-      'Effortlessly convert your blog articles into perfectly optimized social media content that drives engagement and grows your audience.',
-    ctaText: 'Start Creating',
-    secondaryCtaText: 'Learn More',
-    secondaryHref: '#solution',
-  },
-  decorators: [
-    (Story) => (
-      <div className='theme-friendly bg-background text-foreground min-h-screen'>
-        <Story />
-      </div>
-    ),
-  ],
-};
-
-export const WithCallbacks: Story = {
-  args: {
-    ...Default.args,
-    onCtaClick: () => console.log('CTA clicked'),
-    onSecondaryCtaClick: () => console.log('Secondary CTA clicked'),
-  },
-  decorators: Default.decorators,
+export const Default = Template.bind({});
+Default.args = {
+  href: content.hero.href,
+  ctaText: content.hero.ctaText,
+  heroText: content.hero.heroText,
+  heroDescriptionHeading: content.hero.heroDescriptionHeading,
+  heroDescription: content.hero.heroDescription,
+  product: content.metadata.product,
 };

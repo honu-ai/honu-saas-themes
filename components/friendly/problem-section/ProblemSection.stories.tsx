@@ -1,8 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import ProblemSection from './ProblemSection';
+import { icons } from 'lucide-react';
+
+import content from '../../content.json';
 
 const meta: Meta<typeof ProblemSection> = {
-  title: 'Friendly/ProblemSection',
+  title: 'Landing Page/Sections/ProblemSection',
   component: ProblemSection,
   parameters: {
     layout: 'fullscreen',
@@ -11,42 +14,48 @@ const meta: Meta<typeof ProblemSection> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ProblemSection>;
 
 export const Default: Story = {
   args: {
-    title: 'The Content Creation Challenge',
+    title: content.problem.title,
+    subtitle: content.problem.subtitle,
+    result: content.problem.result,
+    resultSubtitle: content.problem.resultSubtitle,
+    cards: content.problem.cards.map((card) => ({
+      ...card,
+      icon: card.icon as keyof typeof icons,
+    })),
+  },
+};
+
+export const CustomContent: Story = {
+  args: {
+    title: 'The Market <span className="text-primary">Challenge</span>',
     subtitle:
-      'Struggling to consistently produce high-quality, SEO-optimised blog content that actually performs?',
-    result: 'The Result: Missed Opportunities & Stagnant Growth',
+      'Modern marketing requires new approaches and strategies to succeed in today&apos;s competitive landscape.',
+    result: 'What happens next?',
     resultSubtitle:
-      'Without a reliable content engine, businesses lose out on organic traffic, customer engagement, and establishing online authority.',
+      'Companies that adapt will thrive, while others fall behind.',
     cards: [
       {
-        icon: 'Hourglass',
-        title: 'Time-Consuming Process',
+        icon: 'Clock',
+        title: 'Increased Competition',
         description:
-          'Hours spent brainstorming, writing, and editing content that may not resonate with your audience.',
+          'More businesses are investing in digital marketing, making it harder to stand out.',
       },
       {
-        icon: 'Hand',
-        title: 'Inconsistent Quality',
+        icon: 'TrendingDown',
+        title: 'Changing Metrics',
         description:
-          'Struggling to maintain a consistent voice and quality across all your content pieces.',
+          'Success is measured differently now, with engagement and conversion trumping impressions.',
       },
       {
-        icon: 'Shuffle',
-        title: 'Poor Engagement',
+        icon: 'Frown',
+        title: 'ROI Pressure',
         description:
-          'Content that fails to engage your audience and drive meaningful interactions.',
+          'Marketing departments are under increasing pressure to demonstrate clear return on investment.',
       },
     ],
   },
-  decorators: [
-    (Story) => (
-      <div className='theme-friendly bg-background text-foreground min-h-screen'>
-        <Story />
-      </div>
-    ),
-  ],
 };

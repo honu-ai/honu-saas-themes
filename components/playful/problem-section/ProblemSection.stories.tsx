@@ -1,8 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import ProblemSection from './ProblemSection';
+import { icons } from 'lucide-react';
+
+import content from '../../content.json';
 
 const meta: Meta<typeof ProblemSection> = {
-  title: 'Playful/ProblemSection',
+  title: 'Landing Page/Sections/ProblemSection',
   component: ProblemSection,
   parameters: {
     layout: 'fullscreen',
@@ -11,30 +14,47 @@ const meta: Meta<typeof ProblemSection> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ProblemSection>;
 
 export const Default: Story = {
   args: {
-    title: 'Creating social media content is tedious',
+    title: content.problem.title,
+    subtitle: content.problem.subtitle,
+    result: content.problem.result,
+    resultSubtitle: content.problem.resultSubtitle,
+    cards: content.problem.cards.map((card) => ({
+      ...card,
+      icon: card.icon as keyof typeof icons,
+    })),
+  },
+};
+
+export const CustomContent: Story = {
+  args: {
+    title: 'The Market <span className="text-primary">Challenge</span>',
     subtitle:
-      'Content creators spend hours manually converting articles into engaging posts',
-    result: 'Hours wasted daily on repetitive content creation tasks',
-    resultSubtitle: 'Leading to burnout and reduced content quality',
+      'Modern marketing requires new approaches and strategies to succeed in today&apos;s competitive landscape.',
+    result: 'What happens next?',
+    resultSubtitle:
+      'Companies that adapt will thrive, while others fall behind.',
     cards: [
       {
-        title: 'Time-consuming manual work',
-        description: 'Converting articles into social posts takes forever',
         icon: 'Clock',
+        title: 'Increased Competition',
+        description:
+          'More businesses are investing in digital marketing, making it harder to stand out.',
       },
       {
-        title: 'Inconsistent formatting',
-        description: 'Each platform requires different post structures',
-        icon: 'LayoutGrid',
+        icon: 'TrendingDown',
+        title: 'Changing Metrics',
+        description:
+          'Success is measured differently now, with engagement and conversion trumping impressions.',
       },
       {
-        title: 'Loss of key insights',
-        description: 'Important points get lost in manual summarization',
-        icon: 'Lightbulb',
+        icon: 'Frown',
+        title: 'ROI Pressure',
+        description:
+          'Marketing departments are under increasing pressure to demonstrate clear return on investment.',
       },
     ],
   },

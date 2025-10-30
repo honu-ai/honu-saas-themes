@@ -1,8 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import ProblemSection from './ProblemSection';
+import { icons } from 'lucide-react';
+
+import content from '../../content.json';
 
 const meta: Meta<typeof ProblemSection> = {
-  title: 'Minimal/ProblemSection',
+  title: 'Landing Page/Sections/ProblemSection',
   component: ProblemSection,
   parameters: {
     layout: 'fullscreen',
@@ -11,33 +14,47 @@ const meta: Meta<typeof ProblemSection> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ProblemSection>;
 
 export const Default: Story = {
   args: {
-    title: 'The Content Creation Challenge',
+    title: content.problem.title,
+    subtitle: content.problem.subtitle,
+    result: content.problem.result,
+    resultSubtitle: content.problem.resultSubtitle,
+    cards: content.problem.cards.map((card) => ({
+      ...card,
+      icon: card.icon as keyof typeof icons,
+    })),
+  },
+};
+
+export const CustomContent: Story = {
+  args: {
+    title: 'The Market <span className="text-primary">Challenge</span>',
     subtitle:
-      'Struggling to consistently produce high-quality, SEO-optimised blog content that actually performs?',
+      'Modern marketing requires new approaches and strategies to succeed in today&apos;s competitive landscape.',
+    result: 'What happens next?',
     resultSubtitle:
-      'Without a reliable content engine, businesses lose out on organic traffic, customer engagement, and establishing online authority.',
+      'Companies that adapt will thrive, while others fall behind.',
     cards: [
       {
-        title: 'Time & Resource Drain',
+        icon: 'Clock',
+        title: 'Increased Competition',
         description:
-          'Content creation is time-consuming, requiring significant effort for research, writing, and optimization.',
-        icon: 'Timer',
+          'More businesses are investing in digital marketing, making it harder to stand out.',
       },
       {
-        title: 'Lack of Specialized Expertise',
+        icon: 'TrendingDown',
+        title: 'Changing Metrics',
         description:
-          'Effective content demands SEO knowledge, dynamic strategy, and data analysis skills often missing in-house.',
-        icon: 'LightbulbOff',
+          'Success is measured differently now, with engagement and conversion trumping impressions.',
       },
       {
-        title: 'Difficulty Leveraging Real-Time Data',
+        icon: 'Frown',
+        title: 'ROI Pressure',
         description:
-          'Translating trends, consumer behavior, and events into timely, relevant articles is complex and slow.',
-        icon: 'Database',
+          'Marketing departments are under increasing pressure to demonstrate clear return on investment.',
       },
     ],
   },

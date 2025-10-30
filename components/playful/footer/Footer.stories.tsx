@@ -1,30 +1,22 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import Footer from './Footer';
+import content from '../../content.json';
 
 const meta: Meta<typeof Footer> = {
-  title: 'Playful/Footer',
+  title: 'Landing Page/Sections/Footer',
   component: Footer,
   parameters: {
     layout: 'fullscreen',
   },
-  tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Footer>;
 
 export const Default: Story = {
   args: {
-    companyName: 'ContentMagic',
-    description:
-      'Transform your articles into engaging social media posts with the power of AI. Join thousands of creators who trust our platform.',
-  },
-};
-
-export const CustomCompany: Story = {
-  args: {
-    companyName: 'CreativeAI',
-    description:
-      'Empowering creators with AI-driven tools that make content creation fun and effortless.',
+    companyName: content.footer.companyName,
+    description: content.footer.description,
   },
 };

@@ -1,8 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import CtaSection from './CtaSection';
+import React from 'react';
+import { Meta, StoryObj } from '@storybook/nextjs';
+import CtaSection, { CtaSectionProps } from './CtaSection';
+import content from '../../content.json';
 
 const meta: Meta<typeof CtaSection> = {
-  title: 'Friendly/CtaSection',
+  title: 'Landing Page/Sections/CtaSection',
   component: CtaSection,
   parameters: {
     layout: 'fullscreen',
@@ -11,39 +13,25 @@ const meta: Meta<typeof CtaSection> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof CtaSection>;
 
 export const Default: Story = {
   args: {
-    title: 'Ready to Transform Your Content?',
+    title: content.cta.title,
+    description: content.cta.description,
+    primaryButtonText: content.cta.primaryButtonText,
+    secondaryButtonText: content.cta.secondaryButtonText,
+    product: content.metadata.product,
+  },
+};
+
+export const CustomContent: Story = {
+  args: {
+    title: 'Ready to Transform Your Business Today',
     description:
-      'Join thousands of content creators who are already using our platform to streamline their workflow and boost engagement.',
-    primaryButtonText: 'Get Started',
-    secondaryButtonText: 'Learn More',
+      'Join thousands of businesses already growing with our platform. Start your journey now.',
+    primaryButtonText: 'Get Started Now',
+    secondaryButtonText: 'Talk to Sales',
+    disclaimerText: 'Start free, no credit card needed',
   },
-  decorators: [
-    (Story) => (
-      <div className='theme-friendly bg-background text-foreground min-h-screen'>
-        <Story />
-      </div>
-    ),
-  ],
-};
-
-export const WithLinks: Story = {
-  args: {
-    ...Default.args,
-    primaryHref: '/sign-up',
-    secondaryHref: '/about',
-  },
-  decorators: Default.decorators,
-};
-
-export const WithCallbacks: Story = {
-  args: {
-    ...Default.args,
-    onPrimaryClick: () => console.log('Primary CTA clicked'),
-    onSecondaryClick: () => console.log('Secondary CTA clicked'),
-  },
-  decorators: Default.decorators,
 };
