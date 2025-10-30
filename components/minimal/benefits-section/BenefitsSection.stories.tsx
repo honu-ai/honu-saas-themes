@@ -16,7 +16,6 @@ type Story = StoryObj<typeof BenefitsSection>;
 
 export const Default: Story = {
   args: {
-    badge: content.benefits.badge,
     title: content.benefits.title,
     description: content.benefits.description,
     cards: content.benefits.cards,
@@ -27,7 +26,6 @@ export const Default: Story = {
 // A simple test for component rendering
 export const WithComponentTest: Story = {
   args: {
-    badge: content.benefits.badge,
     title: content.benefits.title,
     description: content.benefits.description,
     cards: content.benefits.cards,
