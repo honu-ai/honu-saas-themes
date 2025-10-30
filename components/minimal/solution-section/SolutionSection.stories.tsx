@@ -16,10 +16,9 @@ type Story = StoryObj<typeof SolutionSection>;
 
 export const Default: Story = {
   args: {
-    badge: content.solution.badge,
     title: content.solution.title,
     subtitle: content.solution.subtitle,
-    cta: content.solution.cta,
+    ctaText: content.solution.ctaText,
     steps: content.solution.steps,
     product: content.metadata.product,
   },
