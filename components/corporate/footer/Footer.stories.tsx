@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import Footer from './Footer';
-import content from '../../../content.json';
+import content from '../../content.json';
 
 const meta: Meta<typeof Footer> = {
   title: 'Corporate/Landing Page/Sections/Footer',
