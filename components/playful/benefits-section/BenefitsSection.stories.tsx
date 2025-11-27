@@ -1,60 +1,60 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/nextjs';
+import { Meta, StoryFn } from '@storybook/nextjs';
 import BenefitsSection from './BenefitsSection';
-import content from '../../content.json';
 
-const meta: Meta<typeof BenefitsSection> = {
-  title: 'Landing Page/Sections/BenefitsSection',
+export default {
+  title: 'Playful/BenefitsSection',
   component: BenefitsSection,
-  parameters: {
-    layout: 'fullscreen',
-  },
-};
+} as Meta;
 
-export default meta;
-type Story = StoryObj<typeof BenefitsSection>;
+const Template: StoryFn<typeof BenefitsSection> = (args) => (
+  <BenefitsSection {...args} />
+);
 
-export const Default: Story = {
-  args: {
-    badge: content.benefits.badge,
-    title: content.benefits.title,
-    description: content.benefits.description,
-    cards: content.benefits.cards,
-    bottomSection: content.benefits.bottomSection,
-  },
-};
-
-// A simple test for component rendering
-export const WithComponentTest: Story = {
-  args: {
-    badge: content.benefits.badge,
-    title: content.benefits.title,
-    description: content.benefits.description,
-    cards: content.benefits.cards,
-    bottomSection: content.benefits.bottomSection,
-  },
-  play: async ({ canvasElement }) => {
-    // Testing that the component renders without errors
-    const canvas = document.body.querySelector('#storybook-root');
-
-    // Check if title renders correctly
-    const title = canvas?.querySelector('h2');
-    if (title) {
-      // Verify title content - updated to match actual content
-      const hasText = title.textContent?.includes('Go Beyond Basic AI');
-      if (!hasText) {
-        throw new Error('Title does not contain expected text');
-      }
-    } else {
-      throw new Error('Title not found');
-    }
-
-    // Check if benefit cards render
-    const cards = canvas?.querySelectorAll('.hover\\:border-primary\\/50');
-    if (!cards || cards.length !== 3) {
-      throw new Error(
-        'Expected 3 benefit cards but found ' + (cards?.length || 0),
-      );
-    }
+export const Default = Template.bind({});
+Default.args = {
+  badge: 'Unlock Your Content Potential',
+  title: "Go Beyond Basic AI: Content That's Smart, Timely, and Optimized",
+  description:
+    "CurrentSage AI isn't just another AI writer. We're built to give you a competitive edge with content that leverages dynamic market insights and predictive SEO.",
+  cards: [
+    {
+      icon: 'Clock',
+      title: 'Real-Time Relevance Engine',
+      description:
+        'Automatically integrate current trends, consumer behavior, and local/global events into your content.',
+      benefits: [
+        'Capitalize on emerging opportunities',
+        'Create timely, engaging articles',
+        'Stay ahead of the curve',
+      ],
+    },
+    {
+      icon: 'TrendingUp',
+      title: 'Predictive AI SEO Optimization',
+      description:
+        'Leverage AI that analyzes SERP data and search intent to guide content structure and keywords for higher ranking potential.',
+      benefits: [
+        'Improve organic search performance',
+        'Target high-value keywords effectively',
+        'Reduce manual SEO effort',
+      ],
+    },
+    {
+      icon: 'LayoutDashboard',
+      title: 'Seamless Workflow & CMS Sync',
+      description:
+        'Push content directly to your CMS (like WordPress) with two-way sync, drastically reducing publishing friction.',
+      benefits: [
+        'Streamline content production',
+        'Save hours on publishing',
+        'Integrate with your existing tools',
+      ],
+    },
+  ],
+  bottomSection: {
+    title: 'Ready to transform your content strategy?',
+    description:
+      'Experience the power of real-time, optimized content generation. Get started today.',
   },
 };
